@@ -3,45 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
+/*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 08:37:12 by plesukja          #+#    #+#             */
-/*   Updated: 2024/11/26 15:44:11 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/02 17:37:50 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stddef.h>
 
-int main(int ac, char **av, char **envp)
-{
-	t_shell *shell;
-	char    *input;
-
-	(void)ac;
-	(void)av;
-	shell = NULL;
-	input = NULL;
-	init_shell(&shell, envp);
-	while (1)
-	{
-		if (get_input(&input, shell) != -1)
-		{
-			process_input(shell, input);
-			free(input);
-		}
-	}
-	if (input)
-		free(input);
-	clean_and_exit(shell);
-	return(0);
-}
 
 void	init_shell(t_shell **shell, char **envp)
 {
 	*shell = ft_calloc(1, sizeof(t_shell));
 	if(!(*shell))
-		exit();
+		exit(EXIT_FAILURE);
 	(*shell)->env_arr = get_env_arr(envp);
 	create_env_linked_list(&(*shell)->env, envp);
 	(*shell)->has_pipe = 0;
@@ -57,6 +34,7 @@ char	**get_env_arr(char **arr)
 	char	**new_arr;
 	int		i;
 
+	i = 0;
 	while (arr[i])
 		i++;
 	new_arr = malloc(sizeof(char *) * (i + 1));
@@ -108,7 +86,7 @@ void	process_input(t_shell *shell, char *input)
 {
 	if (!build_tree(shell, input))
 		return ;
-	run_signals(2)
+	run_signals(2);
 	run_input(shell->current_cmd, shell);
 	restore_fd(shell);
 	run_signals(3);
@@ -156,7 +134,7 @@ bool	build_tree(t_shell *shell, char *input)
 		return (false);
 	}
 	else if (shell->current_cmd->type == COMMAND \
-		&& !((t_cmd *)(shell->current_cmd)->av[0]))
+		&& !((t_cmd *)(shell->current_cmd))->av[0])
 	{
 		free_tree(shell->current_cmd);
 		free(input);
@@ -167,4 +145,29 @@ bool	build_tree(t_shell *shell, char *input)
 	shell->default_stdin = dup(STDIN_FILENO);
 	shell->default_stdout = dup(STDOUT_FILENO);
 	return (true);
+}
+
+
+int main(int ac, char **av, char **envp)
+{
+	t_shell *shell;
+	char    *input;
+
+	(void)ac;
+	(void)av;
+	shell = NULL;
+	input = NULL;
+	init_shell(&shell, envp);
+	while (1)
+	{
+		if (get_input(&input, shell) != -1)
+		{
+			process_input(shell, input);
+			free(input);
+		}
+	}
+	if (input)
+		free(input);
+	clean_and_exit(shell);
+	return(0);
 }

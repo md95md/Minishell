@@ -6,7 +6,7 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 08:36:54 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/02 14:29:46 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/12/02 17:47:07 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_redir
 typedef struct s_cmd
 {
 	t_token_type		type;
-	char				*av[];
+	char				**av;
 	char				*end_av[];
 }   t_cmd;
 
@@ -72,3 +72,13 @@ typedef struct s_shell
 	int				in_fd;
 	int				out_fd;
 }	t_shell;
+
+void    clean_and_exit(t_shell *shell);
+char	**get_env_arr(char **arr);
+void	create_env_linked_list(t_env **env, char **envp);
+t_token	*process_token(char *s);
+char	*ft_strndup(char *src, size_t n);
+char	*init_prompt(t_shell *shell);
+bool	build_tree(t_shell *shell, char *input);
+void free_tree(t_token *token);
+char	*ft_getenv(t_env *env, char *key);
