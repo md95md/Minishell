@@ -14,8 +14,8 @@
 
 void	add_or_update_env_var(t_env **env, char *var)
 {
-	t_env	*cur;
-	t_env	*new;
+	// t_env	*cur;
+	// t_env	*new;
 	char	*inp_key;
 	char	*inp_value;
 

@@ -46,12 +46,12 @@ t_env	*clone_env(t_env **env)
 	while (cur)
 	{
 		dup_node = duplicate_node(cur);
-		if (!dup_node);
+		if (!dup_node)
 		{
 			free_env(&cloned_env);
-			return ;
+			return (NULL);
 		}
-		add_dup_node_in_new_env(dup_node, cloned_env, tail);
+		add_dup_node_in_new_env(dup_node, &cloned_env, &tail);
 		cur = cur->next;
 	}
 	return (cloned_env);
@@ -81,16 +81,16 @@ t_env	*duplicate_node(t_env *node)
 	return (new_node);
 }
 
-bool	add_dup_node_in_new_env(t_env *dup_node, t_env **new_env, t_env **tail)
+bool add_dup_node_in_new_env(t_env *dup_node, t_env **new_env, t_env **tail)
 {
 	if (!dup_node)
-		return (false);
-	if (!new_env)
+		return false;
+	if (!*new_env)
 		*new_env = dup_node;
 	else
 		(*tail)->next = dup_node;
 	*tail = dup_node;
-	return (true);
+	return true;
 }
 
 void	sort_env(t_env **env)
@@ -131,6 +131,6 @@ void	compare_and_swap_node(t_env	**cur, t_env **prev, bool *sorted_env)
 		else
 			(*prev)->next = tmp;
 		*cur = tmp;
-		sorted_env = false;
+		*sorted_env = false;
 	}
 }
