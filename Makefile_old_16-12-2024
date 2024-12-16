@@ -1,0 +1,64 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/12/14 23:30:53 by plesukja          #+#    #+#              #
+#    Updated: 2024/12/14 23:31:00 by plesukja         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+
+NAME = minishell
+
+CC = cc
+## MAC
+# CC = cc -fsanitize=address 
+# CFLAGS = -Wall -Wextra -Werror -I/opt/homebrew/Cellar/readline/8.2.13/include
+## LINUX
+CFLAGS = -Wall -Wextra -Werror
+LIBFT = libft/libft/
+LIBFT_A = $(LIBFT)libft.a
+HEAD = includes
+SRCDIR = srcs
+BINDIR = bin
+
+SRCS = execute/environment.c
+		
+
+OBJS = $(SRCS:%.c=$(BINDIR)/%.o)
+
+## Mac readline
+# MAC_READ_LINE = -I/opt/homebrew/Cellar/readline/8.2.13/include -L/opt/homebrew/Cellar/readline/8.2.13/lib -lreadline
+
+all: $(NAME)
+
+# MAC
+# $(NAME): $(OBJS) $(HEAD)/minishell.h $(LIBFT_A) Makefile
+# 	@echo "Compiling $(NAME)..."
+# 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_A) $(MAC_READ_LINE) -I $(HEAD) -o $@ -v
+#Linux 
+$(NAME): $(OBJS) $(HEAD)/minishell.h $(LIBFT_A) Makefile
+	$(CC) $(CFLAGS) -lreadline -I $(HEAD) $(OBJS) $(LIBFT_A) -o $@
+
+$(LIBFT_A):
+	make -C $(LIBFT)
+
+$(OBJS): $(BINDIR)%.o: $(SRCDIR)/%.c $(HEAD)/minishell.h $(LIBFT_A) Makefile
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) -c -I $(HEAD) -I$(LIBFT)/$(HEAD) $< -o $@
+# $(CC) $(CFLAGS) -c -I $(HEAD) -I$(LIBFT)/$(HEAD) $< -o $@
+
+clean:
+	rm -rf $(BINDIR)
+	make -C $(LIBFT) clean
+
+fclean: clean
+	rm -rf $(NAME)
+	make -C $(LIBFT) fclean
+
+re: fclean all
+
+.PHONY: all clean fclean re

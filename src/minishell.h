@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 08:36:54 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/02 17:47:07 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/11/26 13:15:35 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <unistd.h>
 # include <signal.h>
 # include <stdbool.h> //bool
-# include <sys/stat.h> //stat
+# include <sys/fcntl.h> //open
 
 # define WHITESPACE " \t\r\n\v"
 # define signS "><|"
@@ -35,15 +35,19 @@ typedef struct s_cmd_oprt
 
 typedef struct s_pipe
 {
-	t_token_type		type;
+	t_token_type	type;
 	t_token			*left;
 	t_token			*right;
 }   t_pipe;
 
 typedef struct s_redir
 {
-	t_token_type		type;
-	t_token			*subcmd;
+	t_token_type	type;
+	t_token			*prior_token;
+	int				mode;
+	char			*file;
+	char			*end_file;
+	char			*temp_file;
 }   t_redir;
 
 typedef struct s_cmd
@@ -82,3 +86,17 @@ char	*init_prompt(t_shell *shell);
 bool	build_tree(t_shell *shell, char *input);
 void free_tree(t_token *token);
 char	*ft_getenv(t_env *env, char *key);
+void	print_sorted_env(t_env **env);
+void	add_or_update_env_var(t_env **env, char *var);
+bool	is_valid_key(char *var);
+void print_error(const char *format, ...);
+char	**env_to_arr(t_env *env, char **old_envp);
+int ft_strcmp(const char *s1, const char *s2);
+void	unset_env_arr(t_env **env, char *var);
+void	handle_cd_error(t_shell *shell, char *msg, char *old_pwd);
+bool	has_too_many_arguments(char **args);
+void	update_path_var(t_env *env, char *old_pwd, char *new_pwd);
+int change_directory(t_shell *shell, char **args, char *old_pwd);
+void update_path_var(t_env *env, char *old_pwd, char *new_pwd);
+void add_or_update_env_var(t_env **env, char *var);
+void handle_cd_error(t_shell *shell, char *msg, char *old_pwd);

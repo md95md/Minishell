@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:30:06 by plesukja          #+#    #+#             */
-/*   Updated: 2024/11/28 18:05:17 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/11/30 14:44:33 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	fork_and_execute(char **new_args, t_shell *shell)
 
 	pid = fork();
 	if (pid < 0)
-		error_exit();
+		error_exit(); //*****error_exit******/
 	else if (pid == 0)
 		execute(new_args, shell);
 	else
@@ -37,7 +37,7 @@ void	execute(char **args, t_shell *shell)
 	if (!args || !args[0])
 	{
 		free_array();
-		clean_and_exit();
+		clean_and_exit(); //*****clean_and_exit******/
 	}
 	if (ft_strchr(args[0], '/'))
 	{
@@ -61,8 +61,8 @@ void	execute(char **args, t_shell *shell)
 
 //127: Command not found.
 //126: Command is found but not executable (permission denied, a directory).
-//stat() checks info about a file or directory. 0 : success, -1: error.
-//access checks permissions for a file. 0 : success, -1: failure
+//stat() checks info about a file or directory. 0: success, -1: error.
+//access checks permissions for a file. 0: success, -1: failure
 void	check_path_executable(char **args, t_shell *shell)
 {
 	char			*path;
@@ -104,7 +104,7 @@ char	*get_file_path(char **args, t_shell *shell)
 		free (tmp);
 		if (access(file_path, X_OK) == 0)
 		{
-			free_aray(path_arr); //***********/
+			free_aray(path_arr); //*****free_aray******/
 			return (file_path);
 		}
 		free(file_path);
@@ -126,6 +126,22 @@ char	**get_path_arr(t_env *env)
 	if (!path_arr)
 		return (NULL);
 	return (path_arr);
+}
+
+char	*ft_getenv(t_env *env, char *key)
+{
+	t_env	*curr;
+
+	if (!env || !key)
+		return (NULL);
+	curr = env;
+	while (curr)
+	{
+		if (ft_strcmp(curr->key, key) == 0)
+			return (curr->value);
+		curr = curr->next;
+	}
+	return (NULL);
 }
 
 path_arr 22/46

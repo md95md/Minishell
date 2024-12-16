@@ -3,16 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 08:37:12 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/02 17:37:50 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/12/14 23:26:25 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stddef.h>
 
+int main(int ac, char **av, char **envp)
+{
+	t_shell *shell;
+	char    *input;
+
+	(void)ac;
+	(void)av;
+	shell = NULL;
+	input = NULL;
+	init_shell(&shell, envp);
+	while (1)
+	{
+		if (get_input(&input, shell) != -1)
+		{
+			process_input(shell, input);
+			free(input);
+		}
+	}
+	if (input)
+		free(input);
+	clean_and_exit(shell);
+	return(0);
+}
 
 void	init_shell(t_shell **shell, char **envp)
 {
@@ -34,7 +57,6 @@ char	**get_env_arr(char **arr)
 	char	**new_arr;
 	int		i;
 
-	i = 0;
 	while (arr[i])
 		i++;
 	new_arr = malloc(sizeof(char *) * (i + 1));
@@ -88,7 +110,7 @@ void	process_input(t_shell *shell, char *input)
 		return ;
 	run_signals(2);
 	run_input(shell->current_cmd, shell);
-	restore_fd(shell);
+	restore_fd(shell);//restore_fd
 	run_signals(3);
 	free_tree(shell->current_cmd);
 	shell->current_cmd = NULL;
@@ -145,29 +167,4 @@ bool	build_tree(t_shell *shell, char *input)
 	shell->default_stdin = dup(STDIN_FILENO);
 	shell->default_stdout = dup(STDOUT_FILENO);
 	return (true);
-}
-
-
-int main(int ac, char **av, char **envp)
-{
-	t_shell *shell;
-	char    *input;
-
-	(void)ac;
-	(void)av;
-	shell = NULL;
-	input = NULL;
-	init_shell(&shell, envp);
-	while (1)
-	{
-		if (get_input(&input, shell) != -1)
-		{
-			process_input(shell, input);
-			free(input);
-		}
-	}
-	if (input)
-		free(input);
-	clean_and_exit(shell);
-	return(0);
 }
