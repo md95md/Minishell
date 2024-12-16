@@ -36,3 +36,20 @@ void	run_builtin_export(t_shell *shell, char **args)
 		shell->env_arr = env_to_arr(shell->env, shell->env_arr);
 	}
 }
+
+void	free_env(t_env **env)
+{
+	t_env	*temp;
+
+	if (!env)
+		return ;
+	while (*env)
+	{
+		temp = *env;
+		*env = temp->next;
+		free(temp->key);
+		free(temp->value);
+		free(temp);
+	}
+	*env = NULL;
+}

@@ -100,3 +100,8 @@ int change_directory(t_shell *shell, char **args, char *old_pwd);
 void update_path_var(t_env *env, char *old_pwd, char *new_pwd);
 void add_or_update_env_var(t_env **env, char *var);
 void handle_cd_error(t_shell *shell, char *msg, char *old_pwd);
+void	free_array(char **array);
+void	sort_env(t_env **env);
+void	free_env(t_env **env);
+bool	add_dup_node_in_new_env(t_env *dup_node, t_env **new_env, t_env **tail);
+void	compare_and_swap_node(t_env	**cur, t_env **prev, bool *sorted_env);
