@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	get_token_sign(char **ptr, char *end, char **token_start, char **token_end)
 {

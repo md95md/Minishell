@@ -21,22 +21,23 @@ bool	is_builtin_cmd(char *arg)
 		|| ft_strcmp(arg, "unset") == 0 || ft_strcmp(arg, "env") == 0
 		|| ft_strcmp(arg, "exit") == 0)
 		return (true);
+	return (false);
 }
 
 void	run_builtin_cmd(t_shell *shell, char **arg)
 {
-	if (ft_strcmp(arg, "echo") == 0)
+	if (ft_strcmp(arg[0], "echo") == 0)
 		run_builtin_echo(shell, arg);
-	else if (ft_strcmp(arg, "cd") == 0)
+	else if (ft_strcmp(arg[0], "cd") == 0)
 		run_builtin_cd(shell, arg);
-	else if (ft_strcmp(arg, "pwd") == 0)
-		run_builtin_pwd(shell, arg);
-	else if (ft_strcmp(arg, "export") == 0)
+	else if (ft_strcmp(arg[0], "pwd") == 0)
+		run_builtin_pwd(shell);
+	else if (ft_strcmp(arg[0], "export") == 0)
 		run_builtin_export(shell, arg);
-	else if (ft_strcmp(arg, "unset") == 0)
+	else if (ft_strcmp(arg[0], "unset") == 0)
 		run_builtin_unset(shell, arg);
-	else if (ft_strcmp(arg, "env") == 0)
+	else if (ft_strcmp(arg[0], "env") == 0)
 		run_builtin_env(shell, shell->env);
-	else if (ft_strcmp(arg, "exit") == 0)
+	else if (ft_strcmp(arg[0], "exit") == 0)
 		run_builtin_exit(shell, arg);
 }

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 t_token	*create_redir_token(t_token *token,char file_start, char file_end, int token_sign)
 {
@@ -18,16 +18,16 @@ t_token	*create_redir_token(t_token *token,char file_start, char file_end, int t
 
 	redir = malloc(sizeof(*redir));
 	if (!redir)
-		return (parser_error("redir malloc failed\n, token"));
+		return (parser_error("redir malloc failed\n, token", token));
 	ft_memset(redir, 0, sizeof(*redir));
 	redir->type = REDIR;
-	redir->subcmd = token;
+	redir->prior_token = token;
 	redir->mode = token_sign;
 	if (redir->mode == 'h')
 	{
 		heredoc_get_input(redir);
 		if (!redir->temp_file)
-		return (parser_error("heredoc failed\n"));
+		return (parser_error("heredoc failed\n", token));
 	}
 	else
 		redir->temp_file = NULL;

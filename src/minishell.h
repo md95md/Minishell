@@ -17,6 +17,8 @@
 # include <signal.h>
 # include <stdbool.h> //bool
 # include <sys/fcntl.h> //open
+# include <errno.h> //errno
+#include <sys/stat.h>
 
 # define WHITESPACE " \t\r\n\v"
 # define signS "><|"
@@ -112,4 +114,26 @@ void	compare_and_swap_node(t_env	**cur, t_env **prev, bool *sorted_env);
 bool	find_existed_node_and_update(t_env **env, char *inp_key, char *inp_value);
 void	append_new_node_in_env(t_env **env, char *inp_key, char *inp_value);
 int	split_var_into_input_key_value(char *var, char **inp_key, char **inp_value);
+
+// Builtin functions
 void	run_builtin_unset(t_shell *shell, char **args);
+void	run_builtin_echo(t_shell *shell, char **args);
+void	run_builtin_cd(t_shell *shell, char **args);
+void	run_builtin_pwd(t_shell *shell);
+void	run_builtin_export(t_shell *shell, char **args);
+void	run_builtin_exit(t_shell *shell, char **args);
+void	run_builtin_env(t_shell *shell, t_env *env);
+
+// Clean and exit functions
+void error_exit(char *message, t_shell *shell);
+void close_fd(t_shell *shell);
+void clean_and_exit(t_shell *shell);
+t_token *parser_error(char *message, t_token *token);
+void free_tree(t_token *token);
+
+// Execute functions
+void	execute(char **args, t_shell *shell);
+
+
+// Parser functions
+void	heredoc_get_input(t_redir *redir);

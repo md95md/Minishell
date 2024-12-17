@@ -10,111 +10,42 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-void	fork_and_execute(char **new_args, t_shell *shell)
+static void	execute_error(char **args, char *s, char *message, t_shell *shell)
 {
-	pid_t	pid;
-	int		status;
-
-	pid = fork();
-	if (pid < 0)
-		error_exit(); //*****error_exit******/
-	else if (pid == 0)
-		execute(new_args, shell);
-	else
-	{
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			shell->exit_status = WEXITSTATUS(status);
-	}
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	if (s)
+		ft_putstr_fd(s, STDERR_FILENO);
+	ft_putstr_fd(message, STDERR_FILENO);
+	free_array(args);
+	clean_and_exit(shell);
 }
 
-void	execute(char **args, t_shell *shell)
+static void	check_access(char **args, t_shell *shell)
 {
-	char	*file_path;
+	char		*pathname;
+	struct stat	statbuf;
 
-	if (!args || !args[0])
-	{
-		free_array();
-		clean_and_exit(); //*****clean_and_exit******/
-	}
-	if (ft_strchr(args[0], '/'))
-	{
-		check_path_executable(args, shell);
-		file_path = ft_strdup(args[0]);
-	}
-	else
-		file_path = get_file_path(args, shell);
-	if (!file_path)
+	pathname = args[0];
+	if (stat(pathname, &statbuf) != 0)
 	{
 		shell->exit_status = 127;
-		execute_error();
-	}
-	if (execve(file_path, args, shell->env) < 0)
-	{
-		free(file_path);
-		shell->exit_status = errno;
-		execute_error();
-	}
-}
-
-//127: Command not found.
-//126: Command is found but not executable (permission denied, a directory).
-//stat() checks info about a file or directory. 0: success, -1: error.
-//access checks permissions for a file. 0: success, -1: failure
-void	check_path_executable(char **args, t_shell *shell)
-{
-	char			*path;
-	struct	stat	statbuf;
-
-	path = args[0];
-	if (stat(path, &statbuf) < 0)
-	{
-		shell->exit_status = 127;
-		execute_error();
+		execute_error(args, pathname, ": No such file or directory\n", shell);
 	}
 	if (S_ISDIR(statbuf.st_mode))
 	{
 		shell->exit_status = 126;
-		execute_error();
+		execute_error(args, pathname, ": Is a directory\n", shell);
 	}
-	if (access(path, X_OK) < 0)
+	if (access(pathname, X_OK) != 0)
 	{
 		shell->exit_status = 126;
-		execute_error();
+		execute_error(args, pathname, ": Permission denied\n", shell);
 	}
 }
 
-char	*get_file_path(char **args, t_shell *shell)
-{
-	char	*file_path;
-	char	*tmp;
-	char	**path_arr;
-	int		i;
-
-	path_arr = get_path_arr(shell->env);
-	if (!path_arr)
-		return (NULL);
-	i = 0;
-	while (path_arr[i])
-	{
-		tmp = ft_strjoin(path_arr[i], "/");
-		file_path = ft_strjoin(tmp, args[0]);
-		free (tmp);
-		if (access(file_path, X_OK) == 0)
-		{
-			free_aray(path_arr); //*****free_aray******/
-			return (file_path);
-		}
-		free(file_path);
-		i++;
-	}
-	free_array(path_arr);
-	return (NULL);
-}
-
-char	**get_path_arr(t_env *env)
+static char	**get_path_arr(t_env *env)
 {
 	char	**path_arr;
 	char	*path_value;
@@ -128,20 +59,195 @@ char	**get_path_arr(t_env *env)
 	return (path_arr);
 }
 
-char	*ft_getenv(t_env *env, char *key)
+static char	*get_pathname(char **cmd, t_shell *shell)
 {
-	t_env	*curr;
+	char	**path_arr;
+	char	*pathname;
+	char	*temp;
+	int		i;
 
-	if (!env || !key)
+	path_arr = get_path_arr(shell->env);
+	if (!path_arr)
 		return (NULL);
-	curr = env;
-	while (curr)
+	i = 0;
+	while (path_arr[i])
 	{
-		if (ft_strcmp(curr->key, key) == 0)
-			return (curr->value);
-		curr = curr->next;
+		temp = ft_strjoin(path_arr[i], "/");
+		pathname = ft_strjoin(temp, cmd[0]);
+		free(temp);
+		if (access(pathname, X_OK) == 0)
+		{
+			free_array(path_arr);
+			return (pathname);
+		}
+		free(pathname);
+		i++;
 	}
+	free_array(path_arr);
 	return (NULL);
 }
 
-path_arr 22/46
+void	execute(char **args, t_shell *shell)
+{
+	char	*pathname;
+
+	if (!args || !args[0])
+	{
+		free_array(args);
+		clean_and_exit(shell);
+	}
+	if (ft_strchr(args[0], '/'))
+	{
+		check_access(args, shell);
+		pathname = ft_strdup(args[0]);
+	}
+	else
+		pathname = get_pathname(args, shell);
+	if (!pathname)
+	{
+		shell->exit_status = 127;
+		execute_error(args, args[0], ": command not found\n", shell);
+	}
+	if (execve(pathname, args, shell->env_arr) < 0)
+	{
+		free(pathname);
+		shell->exit_status = errno;
+		execute_error(args, NULL, "execute error\n", shell);
+	}
+}
+
+
+
+// void	fork_and_execute(char **new_args, t_shell *shell)
+// {
+// 	pid_t	pid;
+// 	int		status;
+
+// 	pid = fork();
+// 	if (pid < 0)
+// 		error_exit(); //*****error_exit******/
+// 	else if (pid == 0)
+// 		execute(new_args, shell);
+// 	else
+// 	{
+// 		waitpid(pid, &status, 0);
+// 		if (WIFEXITED(status))
+// 			shell->exit_status = WEXITSTATUS(status);
+// 	}
+// }
+
+// void	execute(char **args, t_shell *shell)
+// {
+// 	char	*file_path;
+
+// 	if (!args || !args[0])
+// 	{
+// 		free_array();
+// 		clean_and_exit(); //*****clean_and_exit******/
+// 	}
+// 	if (ft_strchr(args[0], '/'))
+// 	{
+// 		check_path_executable(args, shell);
+// 		file_path = ft_strdup(args[0]);
+// 	}
+// 	else
+// 		file_path = get_file_path(args, shell);
+// 	if (!file_path)
+// 	{
+// 		shell->exit_status = 127;
+// 		execute_error();
+// 	}
+// 	if (execve(file_path, args, shell->env) < 0)
+// 	{
+// 		free(file_path);
+// 		shell->exit_status = errno;
+// 		execute_error();
+// 	}
+// }
+
+// //127: Command not found.
+// //126: Command is found but not executable (permission denied, a directory).
+// //stat() checks info about a file or directory. 0: success, -1: error.
+// //access checks permissions for a file. 0: success, -1: failure
+// void	check_path_executable(char **args, t_shell *shell)
+// {
+// 	char			*path;
+// 	struct	stat	statbuf;
+
+// 	path = args[0];
+// 	if (stat(path, &statbuf) < 0)
+// 	{
+// 		shell->exit_status = 127;
+// 		execute_error();
+// 	}
+// 	if (S_ISDIR(statbuf.st_mode))
+// 	{
+// 		shell->exit_status = 126;
+// 		execute_error();
+// 	}
+// 	if (access(path, X_OK) < 0)
+// 	{
+// 		shell->exit_status = 126;
+// 		execute_error();
+// 	}
+// }
+
+// char	*get_file_path(char **args, t_shell *shell)
+// {
+// 	char	*file_path;
+// 	char	*tmp;
+// 	char	**path_arr;
+// 	int		i;
+
+// 	path_arr = get_path_arr(shell->env);
+// 	if (!path_arr)
+// 		return (NULL);
+// 	i = 0;
+// 	while (path_arr[i])
+// 	{
+// 		tmp = ft_strjoin(path_arr[i], "/");
+// 		file_path = ft_strjoin(tmp, args[0]);
+// 		free (tmp);
+// 		if (access(file_path, X_OK) == 0)
+// 		{
+// 			free_aray(path_arr); //*****free_aray******/
+// 			return (file_path);
+// 		}
+// 		free(file_path);
+// 		i++;
+// 	}
+// 	free_array(path_arr);
+// 	return (NULL);
+// }
+
+// char	**get_path_arr(t_env *env)
+// {
+// 	char	**path_arr;
+// 	char	*path_value;
+
+// 	path_value = ft_getenv(env, "PATH");
+// 	if (!path_value)
+// 		return (NULL);
+// 	path_arr = ft_split(path_value, ':');
+// 	if (!path_arr)
+// 		return (NULL);
+// 	return (path_arr);
+// }
+
+// char	*ft_getenv(t_env *env, char *key)
+// {
+// 	t_env	*curr;
+
+// 	if (!env || !key)
+// 		return (NULL);
+// 	curr = env;
+// 	while (curr)
+// 	{
+// 		if (ft_strcmp(curr->key, key) == 0)
+// 			return (curr->value);
+// 		curr = curr->next;
+// 	}
+// 	return (NULL);
+// }
+
+// //path_arr 22/46
