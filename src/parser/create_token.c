@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-t_token	*create_redir_token(t_token *token,char file_start, char file_end, int token_sign)
+t_token	*create_redir_token(t_token *token, char *file_start, char *file_end, int token_sign)
 {
 	t_redir	*redir;
 
@@ -33,7 +33,7 @@ t_token	*create_redir_token(t_token *token,char file_start, char file_end, int t
 		redir->temp_file = NULL;
 	redir->file = file_start;
 	redir->end_file = file_end;
-	if (token->type = REDIR)
+	if (token->type == REDIR)
 		return (chain_redir_node(token, redir));
 	return ((t_token *)redir);
 }
@@ -58,7 +58,7 @@ t_token	*create_pipe_token(t_token *left, t_token *right)
 	if (!pipe)
 	{
 		free_tree(right); // free_tree
-		return (parser_error("pipe malloc failed\n", pipe));
+		return (parser_error("pipe malloc failed\n", left));
 	}
 	ft_memset(pipe, 0, sizeof(*pipe));
 	pipe->type = PIPE;

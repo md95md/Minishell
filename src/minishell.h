@@ -124,6 +124,7 @@ void	run_builtin_export(t_shell *shell, char **args);
 void	run_builtin_exit(t_shell *shell, char **args);
 void	run_builtin_env(t_shell *shell, t_env *env);
 
+
 // Clean and exit functions
 void error_exit(char *message, t_shell *shell);
 void close_fd(t_shell *shell);
@@ -137,3 +138,6 @@ void	execute(char **args, t_shell *shell);
 
 // Parser functions
 void	heredoc_get_input(t_redir *redir);
+t_token	*chain_redir_node(t_token *token, t_redir *redir);
+t_token	*parse_token(char *s, t_token *token, char *end);
+bool	find_next_token(char **ptr, char *end, char *charset)
