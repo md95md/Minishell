@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_token.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 22:51:34 by plesukja          #+#    #+#             */
-/*   Updated: 2024/11/26 13:15:35 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/21 19:00:47 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ t_token	*process_token(char *s)
 	find_next_token(&s, end, "");
 	if (s != end)
 		return (NULL);
-	nulterminate(token);
+	null_terminate(token);
 	return (token);
 }
 
 bool	find_next_token(char **ptr, char *end, char *charset)
 {
 	char	*cur;
-	
+
 	cur = *ptr;
 	while ((cur < end) && ft_strchr(WHITESPACE, *cur))
 		cur++;
