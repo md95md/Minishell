@@ -6,39 +6,11 @@
 /*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 22:51:34 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/21 19:04:15 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/21 19:10:44 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-t_token	*process_token(char *s)
-{
-	char	*end;
-	t_token	*token;
-
-	end = s + ft_strlen(s);
-	parse_token(s, token, end);
-	find_next_token(&s, end, "");
-	if (s != end)
-		return (NULL);
-	null_terminate(token);
-	return (token);
-}
-
-bool	find_next_token(char **ptr, char *end, char *charset)
-{
-	char	*cur;
-
-	cur = *ptr;
-	while ((cur < end) && ft_strchr(WHITESPACE, *cur))
-		cur++;
-	*ptr = cur;
-	if (*cur && ft_strchr(charset, *cur))
-		return (true);
-	else
-		return (false);
-}
 
 static t_token	*null_terminate(t_token *token)
 {
@@ -69,4 +41,32 @@ static t_token	*null_terminate(t_token *token)
 		null_terminate(pipe->right);
 	}
 	return (token);
+}
+
+t_token	*process_token(char *s)
+{
+	char	*end;
+	t_token	*token;
+
+	end = s + ft_strlen(s);
+	parse_token(s, token, end);
+	find_next_token(&s, end, "");
+	if (s != end)
+		return (NULL);
+	null_terminate(token);
+	return (token);
+}
+
+bool	find_next_token(char **ptr, char *end, char *charset)
+{
+	char	*cur;
+
+	cur = *ptr;
+	while ((cur < end) && ft_strchr(WHITESPACE, *cur))
+		cur++;
+	*ptr = cur;
+	if (*cur && ft_strchr(charset, *cur))
+		return (true);
+	else
+		return (false);
 }
