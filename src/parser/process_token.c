@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 22:51:34 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/21 19:00:47 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/21 19:04:15 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ bool	find_next_token(char **ptr, char *end, char *charset)
 		return (false);
 }
 
-t_token	*null_terminate(t_token *token)
+static t_token	*null_terminate(t_token *token)
 {
 	t_cmd	*cmd;
 	t_redir	*redir;
