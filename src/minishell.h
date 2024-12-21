@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 08:36:54 by plesukja          #+#    #+#             */
-/*   Updated: 2024/11/26 13:15:35 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/21 18:58:06 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,26 @@ typedef struct s_shell
 	int				out_fd;
 }	t_shell;
 
-void    clean_and_exit(t_shell *shell);
-char	**get_env_arr(char **arr);
-void	create_env_linked_list(t_env **env, char **envp);
+// // main
+// void	init_shell(t_shell **shell, char **envp);
+// int		get_input(char **line, t_shell *shell);
+// void	process_input(t_shell *shell, char *input);
+// void    clean_and_exit(t_shell *shell);
+
+// // init_shell
+// char	**get_env_arr(char **arr);
+// void	create_env_linked_list(t_env **env, char **envp);
+// void	free_arr();//*********/
+
+// // get_input
+// char	*init_prompt(t_shell *shell);
+
+// // signal
+// void	run_signals(int sig);
+// void	restore_prompt(void);
+// void	ctrl_c(void);
+// void	back_slash(void);
+
 t_token	*process_token(char *s);
 char	*ft_strndup(char *src, size_t n);
 char	*init_prompt(t_shell *shell);
@@ -140,4 +157,4 @@ void	execute(char **args, t_shell *shell);
 void	heredoc_get_input(t_redir *redir);
 t_token	*chain_redir_node(t_token *token, t_redir *redir);
 t_token	*parse_token(char *s, t_token *token, char *end);
-bool	find_next_token(char **ptr, char *end, char *charset)
+bool	find_next_token(char **ptr, char *end, char *charset);
