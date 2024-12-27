@@ -58,6 +58,20 @@ void	free_tree(t_token *token)
 	}
 }
 
+void	restore_fd(t_shell *shell)
+{
+	if (shell->default_stdin != STDIN_FILENO)
+	{
+		dup2(shell->default_stdin, STDIN_FILENO);
+		close(shell->default_stdin);
+	}
+	if (shell->default_stdout != STDOUT_FILENO)
+	{
+		dup2(shell->default_stdout, STDOUT_FILENO);
+		close(shell->default_stdout);
+	}
+}
+
 t_token	*parser_error(char *message, t_token *token)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
