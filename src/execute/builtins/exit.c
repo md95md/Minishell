@@ -6,16 +6,15 @@
 /*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 00:17:53 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/21 19:08:12 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/27 16:38:47 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-
-static bool ft_is_num_arg(char *str)
+static bool	ft_is_num_arg(char *str)
 {
-	int i;
+	int	i;
 
 	if (str[0] == '-' || str[0] == '+')
 	{
@@ -61,6 +60,6 @@ void	run_builtin_exit(t_shell *shell, char **args)
 	}
 	else
 		shell->exit_status = ft_atoi(args[1]) % 256;
-	free_array(args); //free_array
-	clean_and_exit(shell); //clean_and_exit
+	free_array(args);
+	clean_and_exit(shell);
 }
