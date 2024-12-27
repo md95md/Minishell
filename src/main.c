@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 08:37:12 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/14 23:26:25 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/27 13:51:37 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,13 @@ char	**get_env_arr(char **arr)
 	char	**new_arr;
 	int		i;
 
+	i = 0;
 	while (arr[i])
 		i++;
 	new_arr = malloc(sizeof(char *) * (i + 1));
-	if(!new_arr)
+	if (!new_arr)
 		return (NULL);
+	i = 0;
 	while (arr[i])
 	{
 		new_arr[i] = ft_strdup(arr[i]);
