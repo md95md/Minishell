@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:24:01 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/05 13:07:21 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/27 16:35:05 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../minishell.h"
+#include "../../minishell.h"
 
 void	run_builtin_echo(t_shell *shell, char **args)
 {
