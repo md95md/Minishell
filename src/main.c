@@ -6,17 +6,17 @@
 /*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 08:37:12 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/27 13:51:37 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/27 16:31:21 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stddef.h>
 
-int main(int ac, char **av, char **envp)
+int	main(int ac, char **av, char **envp)
 {
-	t_shell *shell;
-	char    *input;
+	t_shell	*shell;
+	char	*input;
 
 	(void)ac;
 	(void)av;
@@ -28,19 +28,23 @@ int main(int ac, char **av, char **envp)
 		if (get_input(&input, shell) != -1)
 		{
 			process_input(shell, input);
+			restore_fd(shell);//restore_fd
+			run_signals(3);
+			free_tree(shell->current_cmd);
+			shell->current_cmd = NULL;
 			free(input);
 		}
 	}
 	if (input)
 		free(input);
 	clean_and_exit(shell);
-	return(0);
+	return (0);
 }
 
 void	init_shell(t_shell **shell, char **envp)
 {
 	*shell = ft_calloc(1, sizeof(t_shell));
-	if(!(*shell))
+	if (!(*shell))
 		exit(EXIT_FAILURE);
 	(*shell)->env_arr = get_env_arr(envp);
 	create_env_linked_list(&(*shell)->env, envp);
@@ -69,7 +73,7 @@ char	**get_env_arr(char **arr)
 		new_arr[i] = ft_strdup(arr[i]);
 		if (!new_arr[i])
 		{
-			free_arr(new_arr);
+			free_array(new_arr);
 			return (NULL);
 		}
 		i++;
@@ -89,7 +93,7 @@ void	create_env_linked_list(t_env **env, char **envp)
 	while (envp[i])
 	{
 		env_node = malloc(sizeof(t_env));
-		if(!env_node)
+		if (!env_node)
 		{
 			free_env(env);
 			return ;
@@ -112,10 +116,6 @@ void	process_input(t_shell *shell, char *input)
 		return ;
 	run_signals(2);
 	run_input(shell->current_cmd, shell);
-	restore_fd(shell);//restore_fd
-	run_signals(3);
-	free_tree(shell->current_cmd);
-	shell->current_cmd = NULL;
 }
 
 int		get_input(char **line, t_shell *shell)
@@ -126,8 +126,8 @@ int		get_input(char **line, t_shell *shell)
 	run_signals(1);
 	*line = readline(prompt);
 	free(prompt);
-	if(!*line)
-		return(-1);
+	if (!*line)
+		return (-1);
 	if (*line && **line)
 		add_history(*line);
 	return (0);
@@ -144,7 +144,6 @@ char	*init_prompt(t_shell *shell)
 	prompt = NULL;
 	if (!pwd || !user)
 		return (ft_strdup("$ "));
-	//init_prompt_color();
 	return (prompt);
 }
 
