@@ -3,40 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 00:17:49 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/12 19:05:22 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/27 16:23:28 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void run_builtin_cd(t_shell *shell, char **args)
+void	run_builtin_cd(t_shell *shell, char **args)
 {
-    char    *old_pwd;
-    char    *new_pwd;
+	char	*old_pwd;
+	char	*new_pwd;
 
-    old_pwd = getcwd(NULL, 0);
-    if (!old_pwd)
-        return (handle_cd_error(shell, NULL, NULL));
-    if (has_too_many_arguments(args))
-        return (handle_cd_error(shell, "too many arguments", old_pwd));
-    if (change_directory(shell, args, old_pwd) == EXIT_FAILURE)
-    {
-        shell->exit_status = EXIT_FAILURE;
-        return ;
-    }
-    new_pwd = getcwd(NULL, 0);
-    if (!new_pwd)
-        return (handle_cd_error(shell, NULL, old_pwd));
-    update_path_var(shell->env, old_pwd, new_pwd);
-    free(old_pwd);
-    free(new_pwd);
-    shell->env_arr = env_to_arr(shell->env, shell->env_arr);
-    shell->exit_status = EXIT_SUCCESS;
+	old_pwd = getcwd(NULL, 0);
+	if (!old_pwd)
+		return (handle_cd_error(shell, NULL, NULL));
+	if (has_too_many_arguments(args))
+		return (handle_cd_error(shell, "too many arguments", old_pwd));
+	if (change_directory(shell, args, old_pwd) == EXIT_FAILURE)
+	{
+		shell->exit_status = EXIT_FAILURE;
+		return ;
+	}
+	new_pwd = getcwd(NULL, 0);
+	if (!new_pwd)
+		return (handle_cd_error(shell, NULL, old_pwd));
+	update_path_var(shell->env, old_pwd, new_pwd);
+	free(old_pwd);
+	free(new_pwd);
+	shell->env_arr = env_to_arr(shell->env, shell->env_arr);
+	shell->exit_status = EXIT_SUCCESS;
 }
-
 
 bool	has_too_many_arguments(char **args)
 {
@@ -47,49 +46,47 @@ bool	has_too_many_arguments(char **args)
 //getenv returns NULL if there is no match
 // chdir: success, zero is returned
 // chdir: error, -1 is returned
-int change_directory(t_shell *shell, char **args, char *old_pwd)
+int	change_directory(t_shell *shell, char **args, char *old_pwd)
 {
-    char *home_dir;
+	char	*home_dir;
 
-    if (!args[1])
-    {
-        home_dir = getenv("HOME");
-        if (!home_dir || chdir(home_dir) == -1)
-        {
-            handle_cd_error(shell, NULL, old_pwd);
-            return (EXIT_FAILURE);
-        }	
-    }
-    else if (chdir(args[1]) == -1)
-    {
-        handle_cd_error(shell, NULL, old_pwd);
-        return (EXIT_FAILURE);
-    }
-    return (EXIT_SUCCESS);
+	if (!args[1])
+	{
+		home_dir = getenv("HOME");
+		if (!home_dir || chdir(home_dir) == -1)
+		{
+			handle_cd_error(shell, NULL, old_pwd);
+			return (EXIT_FAILURE);
+		}
+	}
+	else if (chdir(args[1]) == -1)
+	{
+		handle_cd_error(shell, NULL, old_pwd);
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
 }
 
-
-void update_path_var(t_env *env, char *old_pwd, char *new_pwd)
+void	update_path_var(t_env *env, char *old_pwd, char *new_pwd)
 {
-    char *node_old_pwd;
-    char *node_new_pwd;
+	char	*node_old_pwd;
+	char	*node_new_pwd;
 
-    if (!old_pwd || !new_pwd)
-        return ;
-    node_old_pwd = ft_strjoin("OLDPWD=", old_pwd);
-    node_new_pwd = ft_strjoin("PWD=", new_pwd);
-    if (!node_old_pwd || !node_new_pwd)
-    {
-        free(node_old_pwd);
-        free(node_new_pwd);
-        return;
-    }
-    add_or_update_env_var(&env, node_old_pwd);
-    add_or_update_env_var(&env, node_new_pwd);
-    free(node_old_pwd);
-    free(node_new_pwd);
+	if (!old_pwd || !new_pwd)
+		return ;
+	node_old_pwd = ft_strjoin("OLDPWD=", old_pwd);
+	node_new_pwd = ft_strjoin("PWD=", new_pwd);
+	if (!node_old_pwd || !node_new_pwd)
+	{
+		free(node_old_pwd);
+		free(node_new_pwd);
+		return ;
+	}
+	add_or_update_env_var(&env, node_old_pwd);
+	add_or_update_env_var(&env, node_new_pwd);
+	free(node_old_pwd);
+	free(node_new_pwd);
 }
-
 
 void	handle_cd_error(t_shell *shell, char *msg, char *old_pwd)
 {
