@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 13:09:50 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/06 18:21:31 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/27 16:42:05 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ void	run_builtin_unset(t_shell *shell, char **args)
 	i = 1;
 	while (args[i])
 	{
-			unset_env_arr(&shell->env, args[i]);
-			i++;
+		unset_env_arr(&shell->env, args[i]);
+		i++;
 	}
 	shell->env_arr = env_to_arr(shell->env, shell->env_arr);
-	//return (EXIT_SUCCESS);
+	shell->exit_status = EXIT_SUCCESS;
 }
 
 void	unset_env_arr(t_env **env, char *var)
