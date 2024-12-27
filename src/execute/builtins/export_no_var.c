@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _export_no_var.c                                   :+:      :+:    :+:   */
+/*   export_no_var.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 00:17:57 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/11 13:21:44 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/27 16:50:57 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	print_sorted_env(t_env **env)
 			printf("declare -x %s=\"%s\"\n", cur->key, cur->value);
 		cur = cur->next;
 	}
-	free_env (&cloned_env); //free_env
+	free_env (&cloned_env);
 }
 
 t_env	*clone_env(t_env **env)
@@ -81,16 +81,16 @@ t_env	*duplicate_node(t_env *node)
 	return (new_node);
 }
 
-bool add_dup_node_in_new_env(t_env *dup_node, t_env **new_env, t_env **tail)
+bool	add_dup_node_in_new_env(t_env *dup_node, t_env **new_env, t_env **tail)
 {
 	if (!dup_node)
-		return false;
+		return (false);
 	if (!*new_env)
 		*new_env = dup_node;
 	else
 		(*tail)->next = dup_node;
 	*tail = dup_node;
-	return true;
+	return (true);
 }
 
 void	sort_env(t_env **env)
