@@ -14,6 +14,23 @@ void	free_array(char **arr)
 	free(arr);
 }
 
+void	free_env(t_env **env)
+{
+	t_env	*temp;
+
+	if (!env)
+		return ;
+	while (*env)
+	{
+		temp = *env;
+		*env = (*env)->next;
+		free(temp->key);
+		free(temp->value);
+		free(temp);
+	}
+	*env = NULL;
+}
+
 void	free_tree(t_token *token)
 {
 	t_redir	*redir;
