@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 14:49:23 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/28 20:39:04 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/29 10:43:51 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,14 +138,4 @@ char	**parse_arguments(char **args, t_shell *shell)
 		i++;
 	}
 	return (new_args);
-}
-
-run_redir()
-{
-
-}
-
-run_pipe()
-{
-	
 }
