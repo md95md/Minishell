@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 01:03:37 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/29 01:09:59 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/29 23:56:10 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	dollar_sign_handler(char **s, char **result, t_shell *shell)
 	}
 }
 
-void	character_handler(result, s)
+void	character_handler(char **result, char **s)
 {
 	int		i;
 	char 	*temp;
