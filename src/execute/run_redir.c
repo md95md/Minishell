@@ -6,12 +6,14 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 10:42:00 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/29 16:20:06 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/29 16:23:07 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+// char	*file_name for <, >, >> is the file_name
+// char	*file_name for << (heredoc) is the delimiter
 void	run_redir(t_redir *redir, t_shell *shell)
 {
 	char	*file_name;
