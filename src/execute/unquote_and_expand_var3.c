@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 01:03:37 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/29 01:16:59 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/30 00:01:53 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,10 @@ char	*ft_strjoin_free(char *s1, char *s2)
 
 bool	is_empty(char **s)
 {
-
+	if (((*s)[0] == '\'' || (*s)[0] == '"') && (*s)[1] == '\0')
+	{
+		*s += 1;
+		return (true);
+	}
+	return (false);
 }
