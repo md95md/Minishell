@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 10:43:04 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/29 23:41:51 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/29 23:45:37 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	run_pipe(t_pipe *pipe, t_shell *shell)
 		shell->exit_status = WEXITSTATUS(status);
 }
 
-static void	set_new_left_pfd(int pfd, t_pipe *pipe, t_shell *shell)
+static void	set_new_left_pfd(int pfd[], t_pipe *pipe, t_shell *shell)
 {
 	close(pfd[0]);
 	if (dup2(pfd[1], STDIN_FILENO) < 0)
@@ -49,7 +49,7 @@ static void	set_new_left_pfd(int pfd, t_pipe *pipe, t_shell *shell)
 	clean_and_exit(shell);
 }
 
-static void	set_new_right_pfd(int pfd, t_pipe *pipe, t_shell *shell)
+static void	set_new_right_pfd(int pfd[], t_pipe *pipe, t_shell *shell)
 {
 	close(pfd[1])
 	if (dup2(pfd[0], STDOUT_FILENO) < 0)
