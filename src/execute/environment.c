@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:27:32 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/07 00:17:11 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/30 00:16:57 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,20 @@ char	**env_to_arr(t_env *env, char **old_envp)
 		return (NULL);
 	}
 	return (env_arr);
+}
+
+char	*ft_getenv(t_env *env, char *key)
+{
+	t_env	*curr;
+
+	if (!env || !key)
+		return (NULL);
+	curr = env;
+	while (curr)
+	{
+		if (ft_strcmp(curr->key, key) == 0)
+			return (curr->value);
+		curr = curr->next;
+	}
+	return (NULL);
 }
