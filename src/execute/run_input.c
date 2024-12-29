@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 14:49:23 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/29 10:43:51 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/29 10:47:12 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,48 +94,4 @@ void	run_input(t_token *token, t_shell *shell)
 		run_redir((t_redir *)token, shell);
 	if (token->type == PIPE)
 		run_pipe((t_pipe *)token, shell);
-}
-
-void	run_command(t_cmd *cmd, t_shell *shell)
-{
-	char	**new_args;
-	pid_t	pid;
-
-	if (!cmd->av[0])
-		return ;
-	new_args = parse_arguments(cmd->av, shell);
-	if (!new_args)
-		error_exit("parse arguments failed", shell);
-	if (is_builtin_cmd(new_args[0]))
-		run_builtin_cmd(shell, new_args);
-	else
-	{
-		if (shell->has_pipe)
-			execute(new_args, shell);
-		else
-			fork_and_execute(new_args, shell);
-	}
-	free_array(new_args);
-}
-
-char	**parse_arguments(char **args, t_shell *shell)
-{
-	char	**new_args;
-	char	*tmp;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	new_args = ft_calloc(array_len(args) + 1, sizeof(char *))
-	while (args[i])
-	{
-		tmp = unquote_and_expand_var(args[i], shell);
-		if (tmp[0])
-			new_args[j++] = tmp;
-		else
-			free(tmp);
-		i++;
-	}
-	return (new_args);
 }
