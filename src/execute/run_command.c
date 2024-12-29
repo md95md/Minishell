@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 10:46:41 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/29 10:47:33 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/29 23:51:06 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	run_command(t_cmd *cmd, t_shell *shell)
 	free_array(new_args);
 }
 
-char	**parse_arguments(char **args, t_shell *shell)
+static char	**parse_arguments(char **args, t_shell *shell)
 {
 	char	**new_args;
 	char	*tmp;
