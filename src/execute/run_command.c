@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 10:46:41 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/29 23:51:06 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/30 00:47:24 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,21 @@ static char	**parse_arguments(char **args, t_shell *shell)
 		i++;
 	}
 	return (new_args);
+}
+
+void	fork_and_execute(char **new_args, t_shell *shell)
+{
+	pid_t	pid;
+	int		statu
+	pid = fork();
+	if (pid < 0)
+		error_exit("fork failed", shell);
+	else if (pid == 0)
+		execute(new_args, shell);
+	else
+	{
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			shell->exit_status = WEXITSTATUS(status);
+	}
 }
