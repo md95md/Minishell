@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 08:36:54 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/27 16:57:11 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/30 01:13:17 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,8 @@ t_token	*parse_command_args(t_token *token, t_cmd *cmd, char **ptr, char *end);
 t_token	*parse_pipe(char **ptr, char *end);
 
 //****************/ run_input
-void	run_command(t_token *token, t_shell *shell);
-void	run_redirections(t_redir *redir, t_shell *shell);
+void	run_command(t_cmd *cmd, t_shell *shell);
+void	run_redir(t_redir *redir, t_shell *shell);
 void	run_pipe(t_pipe *pipe, t_shell *shell);
 
 
@@ -140,14 +140,18 @@ void	create_env_linked_list(t_env **env, char **envp);
 void	free_array(char **arr);
 void	free_env(t_env **env);
 void	free_tree(t_token *token);
+void	clean_and_exit(t_shell *shell);
 
 //*****************************************************************//
 //*****************************************************************//
+
+//****************/ main
 int		get_input(char **line, t_shell *shell);
 void	process_input(t_shell *shell, char *input);
 bool	build_tree(t_shell *shell, char *input);
 t_token	*process_token(char *s);
 
+//****************/ process_token
 t_token	*parse_token(char *s, t_token *token, char *end);
 t_token	*create_cmd_token(void);
 t_token	*parse_redirs(t_token *token, char **ptr, char *end);
@@ -157,13 +161,29 @@ bool	find_next_token(char **ptr, char *end, char *charset);
 t_token	*null_terminate(t_token *token);
 void	run_input(t_token *token, t_shell *shell);
 
-void	run_command(t_token *token, t_shell *shell);
-// void	run_child_process(t_cmd *command, t_shell *shell);
-// void	run_non_piped_command(t_cmd *command, t_shell *shell);
-void	run_redirections(t_redir *redir, t_shell *shell);
+//****************/ run_input
+void	run_command(t_cmd *cmd, t_shell *shell);
+void	run_redir(t_redir *redir, t_shell *shell);
 void	run_pipe(t_pipe *pipe, t_shell *shell);
 
-//****************/ builtins
+//****************/ unquote_and_expand_var
+char	*unquote_and_expand_var(char *s, t_shell *shell);
+void	single_quote_handler(char **s, char **result);
+void	double_quote_handler(char **s, char **result);
+void	double_quote_dollar_handler(char **s, char **result, t_shell *shell);
+void	dollar_sign_handler(char **s, char **result, t_shell *shell);
+void	character_handler(char **result, char **s);
+char	*var_expansion(char **s,t_shell *shell);//recheck again
+char	*ft_strjoin_free(char *s1, char *s2);
+bool	is_empty(char **s);
+
+//****************/ run_command
+bool	is_builtin_cmd(char *arg);
+void	run_builtin_cmd(t_shell *shell, char **arg);
+void	execute(char **args, t_shell *shell);
+void	fork_and_execute(char **new_args, t_shell *shell);
+
+//****************/ run_builtin_cmd
 void	run_builtin_cd(t_shell *shell, char **args);//-----------------
 void	run_builtin_echo(t_shell *shell, char **args);
 void	run_builtin_env(t_shell *shell, t_env *env);
@@ -171,6 +191,11 @@ void	run_builtin_exit(t_shell *shell, char **args);
 void	run_builtin_export(t_shell *shell, char **args);//-----------------
 void	print_sorted_env(t_env **env);
 void	add_or_update_env_var(t_env **env, char *var);
+
+//****************/ utils
+//****************/ clean_and_exit
+//****************/ free
+//****************/ environment
 
 //***********************************//
 //////////////Alina section////////////
