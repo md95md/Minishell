@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 10:43:04 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/29 23:45:37 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/29 23:46:18 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	run_pipe(t_pipe *pipe, t_shell *shell)
 {
-	int	pfd[2];
+	int		pfd[2];
 	pid_t	pid_left;
 	pid_t	pid_right;
 	int		status;
