@@ -6,7 +6,7 @@
 #    By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/17 12:15:22 by plesukja          #+#    #+#              #
-#    Updated: 2024/12/30 18:28:43 by plesukja         ###   ########.fr        #
+#    Updated: 2024/12/30 18:51:27 by plesukja         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,6 +84,9 @@ SRCS		:=	libft/get_next_line/get_next_line_bonus.c \
 				src/execute/run_command.c \
 				src/execute/run_redir.c \
 				src/execute/run_pipe.c \
+				src/execute/unquote_and_expand_var1.c \
+				src/execute/unquote_and_expand_var2.c \
+				src/execute/unquote_and_expand_var3.c \
 				src/parser/create_token.c \
 				src/parser/process_token.c \
 				src/parser/create_redir_token_heredoc.c \
