@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:59:12 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/11 13:21:24 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/30 14:42:53 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ void	run_builtin_export(t_shell *shell, char **args)
 		{
 			if (!is_valid_key(args[i]))
 			{
-				print_error("export: `", args[i], "': not a valid identifier");
+				ft_putstr_fd("minishell: export: ", STDERR_FILENO);
+				ft_putstr_fd(args[i], STDERR_FILENO);
+				ft_putendl_fd(": not a valid identifier", STDERR_FILENO);
 				shell->exit_status = 1;
 			}
 			else
@@ -35,6 +37,22 @@ void	run_builtin_export(t_shell *shell, char **args)
 		}
 		shell->env_arr = env_to_arr(shell->env, shell->env_arr);
 	}
+}
+
+static bool	is_valid_key(char *var)
+{
+	int	i;
+
+	i = 0;
+	if (!ft_isalpha(var[i]) || var[i] != '_')
+		return (false);
+	while (var[i] && var[i] != '=')
+	{
+		if (!ft_isalnum(var[i]) && var[i] != '_')
+			return (false);
+		i++;
+	}
+	return (true);
 }
 
 void	free_env(t_env **env)
