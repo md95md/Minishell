@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 08:36:54 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 15:32:16 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/30 16:06:41 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,9 +154,9 @@ t_token	*process_token(char *s);
 //****************/ process_token
 t_token	*parse_token(char *s, t_token *token, char *end);
 t_token	*create_cmd_token(void);
-t_token	*parse_redirs(t_token *token, char **ptr, char *end);
-t_token	*parse_command_args(t_token *token, t_cmd *cmd, char **ptr, char *end);
-t_token	*parse_pipe(char **ptr, char *end);
+// t_token	*parse_redirs(t_token *token, char **ptr, char *end);
+// t_token	*parse_command_args(t_token *token, t_cmd *cmd, char **ptr, char *end);
+// t_token	*parse_pipe(char **ptr, char *end);
 bool	find_next_token(char **ptr, char *end, char *charset);
 t_token	*null_terminate(t_token *token);
 void	run_input(t_token *token, t_shell *shell);
