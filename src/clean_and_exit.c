@@ -3,27 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   clean_and_exit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 16:29:54 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/29 16:30:06 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/30 14:30:57 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	free_array(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
 
 void	restore_fd(t_shell *shell)
 {
