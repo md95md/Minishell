@@ -6,29 +6,29 @@
 /*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 08:36:54 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 16:06:41 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/30 18:01:11 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../libft/libft/libft.h"
-# include <readline/readline.h> //readline
-# include <readline/history.h> //add_history
-# include <unistd.h>
-# include <signal.h>
-# include <stdbool.h> //bool
-# include <sys/fcntl.h> //open
-# include <errno.h> //errno
+#include "../libft/libft/libft.h"
+#include <readline/readline.h> //readline
+#include <readline/history.h> //add_history
+#include <unistd.h>
+#include <signal.h>
+#include <stdbool.h> //bool
+#include <sys/fcntl.h> //open
+#include <errno.h> //errno
 #include <sys/stat.h>
 
-# define WHITESPACE " \t\r\n\v"
-# define signS "><|"
+#define WHITESPACE " \t\r\n\v"
+#define SIGNS "><|"
 
 typedef enum e_cmd_oprt_type
 {
 	COMMAND,
 	REDIR,
 	PIPE
-}   t_token_type;
+}	t_token_type;
 
 typedef struct s_cmd_oprt
 {
@@ -40,7 +40,7 @@ typedef struct s_pipe
 	t_token_type	type;
 	t_token			*left;
 	t_token			*right;
-}   t_pipe;
+}	t_pipe;
 
 typedef struct s_redir
 {
@@ -79,68 +79,67 @@ typedef struct s_shell
 	int				out_fd;
 }	t_shell;
 
-///****************/ main
-void	init_shell(t_shell **shell, char **envp);
-int		get_input(char **line, t_shell *shell);
-void	process_input(t_shell *shell, char *input);
-void	restore_fd(t_shell *shell);
-//run_signals(3);
-//free_tree();
-void	clean_and_exit(t_shell *shell);
+// ///****************/ main
+// void	init_shell(t_shell **shell, char **envp);
+// int		get_input(char **line, t_shell *shell);
+// void	process_input(t_shell *shell, char *input);
+// void	restore_fd(t_shell *shell);
+// //run_signals(3);
+// //free_tree();
+// void	clean_and_exit(t_shell *shell);
 
-//****************/ init_shell
-char	**get_env_arr(char **arr);
-void	create_env_linked_list(t_env **env, char **envp);
+// //****************/ init_shell
+// char	**get_env_arr(char **arr);
+// void	create_env_linked_list(t_env **env, char **envp);
 
-//****************/ get_input
-char	*init_prompt(t_shell *shell);
-//run_signals(1);
-//readline();
-//add_history());
+// //****************/ get_input
+// char	*init_prompt(t_shell *shell);
+// //run_signals(1);
+// //readline();
+// //add_history());
 
-//****************/ process_input
-bool	build_tree(t_shell *shell, char *input);
-//run_signals(2);
-void	run_input(t_token *token, t_shell *shell);
+// //****************/ process_input
+// bool	build_tree(t_shell *shell, char *input);
+// //run_signals(2);
+// void	run_input(t_token *token, t_shell *shell);
 
-//****************/ build_tree
-t_token	*process_token(char *s);
+// //****************/ build_tree
+// t_token	*process_token(char *s);
 
-//****************/ process_token
-t_token	*parse_token(char *s, t_token *token, char *end);
-bool	find_next_token(char **ptr, char *end, char *charset);
-t_token	*null_terminate(t_token *token);
+// //****************/ process_token
+// t_token	*parse_token(char *s, t_token *token, char *end);
+// bool	find_next_token(char **ptr, char *end, char *charset);
 
-//****************/ parse_token
-t_token	*create_cmd_token(void);
-t_token	*parse_redirs(t_token *token, char **ptr, char *end);
-t_token	*parse_command_args(t_token *token, t_cmd *cmd, char **ptr, char *end);
-t_token	*parse_pipe(char **ptr, char *end);
+// //****************/ parse_token
+// // t_token	*create_cmd_token(void);
+// // t_token	*parse_redirs(t_token *token, char **ptr, char *end);
+// // t_token	*parse_command_args(t_token *token, t_cmd *cmd, char **ptr, char *end);
+// // t_token	*parse_pipe(char **ptr, char *end);
 
-//****************/ run_input
-void	run_command(t_cmd *cmd, t_shell *shell);
-void	run_redir(t_redir *redir, t_shell *shell);
-void	run_pipe(t_pipe *pipe, t_shell *shell);
+// //****************/ run_input
+// void	run_command(t_cmd *cmd, t_shell *shell);
+// void	run_redir(t_redir *redir, t_shell *shell);
+// void	run_pipe(t_pipe *pipe, t_shell *shell);
 
 
-//****************/ run_command
-//run_child_process();
-//run_non_piped_command();
+// //****************/ run_command
+// //run_child_process();
+// //run_non_piped_command();
 
-//****************/ signal
-void	run_signals(int sig);
-void	restore_prompt(void);
-void	ctrl_c(void);
-void	back_slash(void);
+// //****************/ signal
+// void	run_signals(int sig, t_shell *shell);
+// // void	restore_prompt(void);
+// // void	ctrl_c(void);
+// // void	back_slash(void);
 
-//****************/ env
-void	create_env_linked_list(t_env **env, char **envp);
+// //****************/ env
+// void	create_env_linked_list(t_env **env, char **envp);
 
-//****************/ clean_and_exit
-void	free_array(char **arr);
-void	free_env(t_env **env);
-void	free_tree(t_token *token);
-void	clean_and_exit(t_shell *shell);
+// //****************/ clean_and_exit
+// void	free_array(char **arr);
+// void	free_env(t_env **env);
+// void	free_tree(t_token *token);
+// void	clean_and_exit(t_shell *shell);
 
 //*****************************************************************//
 //*****************************************************************//
@@ -151,14 +150,21 @@ void	process_input(t_shell *shell, char *input);
 bool	build_tree(t_shell *shell, char *input);
 t_token	*process_token(char *s);
 
+//****************/ get_input
+
+
 //****************/ process_token
 t_token	*parse_token(char *s, t_token *token, char *end);
-t_token	*create_cmd_token(void);
+// t_token	*create_cmd_token(void);
 // t_token	*parse_redirs(t_token *token, char **ptr, char *end);
 // t_token	*parse_command_args(t_token *token, t_cmd *cmd, char **ptr, char *end);
 // t_token	*parse_pipe(char **ptr, char *end);
+int	get_token_sign(char **ptr, char *end, char **token_start, char **token_end);
+t_token	*create_pipe_token(t_token *left, t_token *right);
+t_token	*create_redir_token(t_token *token, char *file_start, char *file_end, int token_sign);
+void	heredoc_get_input(t_redir *redir);
+
 bool	find_next_token(char **ptr, char *end, char *charset);
-t_token	*null_terminate(t_token *token);
 void	run_input(t_token *token, t_shell *shell);
 
 //****************/ run_input
@@ -210,11 +216,18 @@ void	error_exit(char *message, t_shell *shell);
 //****************/ free
 void	free_array(char **array);
 void	free_env(t_env **env);
+void	free_tree(t_token *token);
 
 //****************/ environment
 char	**env_to_arr(t_env *env, char **old_envp);
 char	*ft_getenv(t_env *env, char *key);
 void	free_tree(t_token *token);
+
+//****************/ signal
+void	run_signals(int sig, t_shell *shell);
+// void	restore_prompt(void);
+// void	ctrl_c(void);
+// void	back_slash(void);
 
 //***********************************//
 //////////////Alina section////////////
