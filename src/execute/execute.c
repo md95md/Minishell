@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:30:06 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 15:39:03 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/30 15:43:41 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,11 @@ void	execute(char **args, t_shell *shell)
 		shell->exit_status = 127;
 		execute_error(args, args[0], ": command not found\n", shell);
 	}
-	if (execve(file_path, args, shell->env) < 0)
+	if (execve(file_path, args, shell->env_arr) < 0)
 	{
 		free(file_path);
 		shell->exit_status = errno;
-		execute_error((args, NULL, "execute error\n", shell););
+		execute_error(args, NULL, "execute error\n", shell);
 	}
 }
 // //path_arr 22/46
