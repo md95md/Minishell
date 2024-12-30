@@ -6,11 +6,28 @@
 /*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:59:12 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 14:45:01 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/30 14:52:07 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+
+static bool	is_valid_key(char *var)
+{
+	int	i;
+
+	i = 0;
+	if (!ft_isalpha(var[i]) || var[i] != '_')
+		return (false);
+	while (var[i] && var[i] != '=')
+	{
+		if (!ft_isalnum(var[i]) && var[i] != '_')
+			return (false);
+		i++;
+	}
+	return (true);
+}
 
 void	run_builtin_export(t_shell *shell, char **args)
 {
@@ -38,20 +55,3 @@ void	run_builtin_export(t_shell *shell, char **args)
 		shell->env_arr = env_to_arr(shell->env, shell->env_arr);
 	}
 }
-
-static bool	is_valid_key(char *var)
-{
-	int	i;
-
-	i = 0;
-	if (!ft_isalpha(var[i]) || var[i] != '_')
-		return (false);
-	while (var[i] && var[i] != '=')
-	{
-		if (!ft_isalnum(var[i]) && var[i] != '_')
-			return (false);
-		i++;
-	}
-	return (true);
-}
-
