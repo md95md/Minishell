@@ -6,11 +6,21 @@
 /*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:30:06 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 15:34:40 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/30 15:37:00 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static void	execute_error(char **args, char *s, char *message, t_shell *shell)
+{
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	if (s)
+		ft_putstr_fd(s, STDERR_FILENO);
+	ft_putstr_fd(message, STDERR_FILENO);
+	free_array(args);
+	clean_and_exit(shell);
+}
 
 //127: Command not found.
 //126: Command is found but not executable (permission denied, a directory).
@@ -79,16 +89,6 @@ static char	*get_file_path(char **args, t_shell *shell)
 	}
 	free_array(path_arr);
 	return (NULL);
-}
-
-static void	execute_error(char **args, char *s, char *message, t_shell *shell)
-{
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	if (s)
-		ft_putstr_fd(s, STDERR_FILENO);
-	ft_putstr_fd(message, STDERR_FILENO);
-	free_array(args);
-	clean_and_exit(shell);
 }
 
 void	execute(char **args, t_shell *shell)
