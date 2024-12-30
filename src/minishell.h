@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 08:36:54 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 18:26:19 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/30 18:49:27 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ void	run_pipe(t_pipe *pipe, t_shell *shell);
 //****************/ unquote_and_expand_var
 char	*unquote_and_expand_var(char *s, t_shell *shell);
 void	single_quote_handler(char **s, char **result);
-void	double_quote_handler(char **s, char **result);
+void	double_quote_handler(char **s, char **result, t_shell *shell);
 void	double_quote_dollar_handler(char **s, char **result, t_shell *shell);
 void	dollar_sign_handler(char **s, char **result, t_shell *shell);
 void	character_handler(char **result, char **s);
