@@ -3,35 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   export_with_var.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 23:26:22 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/12 15:34:38 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/30 15:22:21 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	add_or_update_env_var(t_env **env, char *var)
-{
-	// t_env	*cur;
-	// t_env	*new;
-	char	*inp_key;
-	char	*inp_value;
-
-	if (!env || !var)
-		return ;
-	if (split_var_into_input_key_value(var, &inp_key, &inp_value) < 0)
-		return ;
-	if (find_existed_node_and_update(env, inp_key, inp_value))
-		return ;
-	else
-		append_new_node_in_env(env, inp_key, inp_value);
-}
-
 //success returns 0
 //error returns -1
-int	split_var_into_input_key_value(char *var, char **inp_key, char **inp_value)
+static int	split_var_into_input_key_value(char *var, char **inp_key, char **inp_value)
 {
 	char	*equal_ptr;
 
@@ -58,10 +41,10 @@ int	split_var_into_input_key_value(char *var, char **inp_key, char **inp_value)
 	return (0);
 }
 
-bool	find_existed_node_and_update(t_env **env, char *inp_key, char *inp_value)
+static bool	find_existed_node_and_update(t_env **env, char *inp_key, char *inp_value)
 {
 	t_env	*cur;
-	
+
 	cur = *env;
 	while (cur)
 	{
@@ -79,7 +62,7 @@ bool	find_existed_node_and_update(t_env **env, char *inp_key, char *inp_value)
 	return (false);
 }
 
-void	append_new_node_in_env(t_env **env, char *inp_key, char *inp_value)
+static void	append_new_node_in_env(t_env **env, char *inp_key, char *inp_value)
 {
 	t_env	*new;
 	t_env	*cur;
@@ -105,18 +88,19 @@ void	append_new_node_in_env(t_env **env, char *inp_key, char *inp_value)
 	}
 }
 
-bool	is_valid_key(char *var)
+void	add_or_update_env_var(t_env **env, char *var)
 {
-	int	i;
+	// t_env	*cur;
+	// t_env	*new;
+	char	*inp_key;
+	char	*inp_value;
 
-	i = 0;
-	if ( !ft_isalpha(var[i]) || var[i] != '_')
-		return (false);
-	while (var[i] && var[i] != '=')
-	{
-		if (!ft_isalnum(var[i]) && var[i] != '_')
-			return (false);
-		i++;
-	}
-	return (true);
+	if (!env || !var)
+		return ;
+	if (split_var_into_input_key_value(var, &inp_key, &inp_value) < 0)
+		return ;
+	if (find_existed_node_and_update(env, inp_key, inp_value))
+		return ;
+	else
+		append_new_node_in_env(env, inp_key, inp_value);
 }
