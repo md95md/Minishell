@@ -5,21 +5,28 @@
 #                                                     +:+ +:+         +:+      #
 #    By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/12/17 12:15:22 by plesukja          #+#    #+#              #
-#    Updated: 2024/12/17 12:23:06 by plesukja         ###   ########.fr        #
+#    Created: 2024/12/30 10:41:49 by plesukja          #+#    #+#              #
+#    Updated: 2024/12/30 10:48:23 by plesukja         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+NAME = minishell
 
-######## CONFIG ########
+CC = cc
+## MAC
+CC = cc -fsanitize=address
+# ## original
+# CFLAGS = -Wall -Wextra -Werror -I/opt/homebrew/Cellar/readline/8.2.13/include
+CFLAGS = -Wall -Wextra -Werror -I/usr/local/Cellar/readline/8.2.13/include -v
+# ## LINUX
+# CFLAGS = -Wall -Wextra -Werror
+LIBFT = libft/
+LIBFT_A = $(LIBFT)libft.a
+HEAD = includes
+SRCDIR = srcs
+BINDIR = bin
 
-NAME        := minishell
-CC          := cc
-FLAGS       := -Wall -Wextra -Werror 
-
-######## PROGRAM'S SRCS ########
-
-SRCS		:=	libft/get_next_line/get_next_line_bonus.c \
+SRCS = libft/get_next_line/get_next_line_bonus.c \
 				libft/get_next_line/get_next_line.c \
 				libft/get_next_line/get_next_line_utils.c \
 				libft/get_next_line/get_next_line_utils_bonus.c \
@@ -89,39 +96,42 @@ SRCS		:=	libft/get_next_line/get_next_line_bonus.c \
 				src/signal.c \
 				src/main.c \
 				src/utils.c \
-						  
-OBJS        := $(SRCS:.c=.o)
 
-.c.o:
-	${CC} ${FLAGS} -c $< -o ${<:.c=.o}
+OBJS = $(SRCS:%.c=$(BINDIR)/%.o)
 
-######## Makefile  obj ########
+## Mac readline
+# ## original
+#MAC_READ_LINE = -I/opt/homebrew/Cellar/readline/8.2.13/include -L/opt/homebrew/Cellar/readline/8.2.13/lib -lreadline
+MAC_READ_LINE = -I/usr/local/Cellar/readline/8.2.13/include -L/usr/local/Cellar/readline/8.2.13/lib -lreadline -lcurse
+# ## to find homebrew path
+#brew list readline
 
-CLR_RMV		:= \033[0m
-RED		    := \033[1;31m
-GREEN		:= \033[1;32m
-YELLOW		:= \033[1;33m
-BLUE		:= \033[1;34m
-CYAN 		:= \033[1;36m
-RM		    := rm -f
+all: $(NAME)
 
-${NAME}:	${OBJS}
-			@echo "$(GREEN)Compilation ${CLR_RMV}of ${YELLOW}$(NAME) ${CLR_RMV}..."
-			${CC} ${FLAGS} -o ${NAME} ${OBJS}
-			@echo "$(GREEN)$(NAME) created[0m ✔️"
+# MAC
+$(NAME): $(OBJS) $(HEAD)/minishell.h $(LIBFT_A) Makefile
+	@echo "Compiling $(NAME)..."
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_A) $(MAC_READ_LINE) -I $(HEAD) -o $@ -v
+# #Linux 
+# $(NAME): $(OBJS) $(HEAD)/minishell.h $(LIBFT_A) Makefile
+# 	$(CC) $(CFLAGS) -lreadline -I $(HEAD) $(OBJS) $(LIBFT_A) -o $@
 
-all:		${NAME}
+$(LIBFT_A):
+	make -C $(LIBFT)
 
-bonus:		all
+$(OBJS): $(BINDIR)%.o: $(SRCDIR)/%.c $(HEAD)/minishell.h $(LIBFT_A) Makefile
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) -c -I $(HEAD) -I$(LIBFT)/$(HEAD) $< -o $@
+# $(CC) $(CFLAGS) -c -I $(HEAD) -I$(LIBFT)/$(HEAD) $< -o $@
 
 clean:
-			@ ${RM} *.o */*.o */*/*.o */*/*/*.o
-			@ echo "$(RED)Deleting $(CYAN)$(NAME) $(CLR_RMV)objs ✔️"
+	rm -rf $(BINDIR)
+	make -C $(LIBFT) clean
 
-fclean:		clean
-			@ ${RM} ${NAME}
-			@ echo "$(RED)Deleting $(CYAN)$(NAME) $(CLR_RMV)binary ✔️"
+fclean: clean
+	rm -rf $(NAME)
+	make -C $(LIBFT) fclean
 
-re:			fclean all
+re: fclean all
 
 .PHONY: all clean fclean re
