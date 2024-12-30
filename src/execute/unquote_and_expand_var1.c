@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unquote_and_expand_var.c                           :+:      :+:    :+:   */
+/*   unquote_and_expand_var1.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 20:41:27 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/29 01:04:35 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/30 18:42:52 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ char	*unquote_and_expand_var(char *s, t_shell *shell)
 	{
 		if (*s == '\'')
 			single_quote_handler(&s, &result);
-		else if	(*s == '"')
+		else if (*s == '"')
 			double_quote_handler(&s, &result);
-		else if	(*s == '$')
+		else if (*s == '$')
 			dollar_sign_handler(&s, &result, shell);
 		else
 			character_handler(&s, &result);
@@ -33,7 +33,7 @@ char	*unquote_and_expand_var(char *s, t_shell *shell)
 	return (result);
 }
 
-char	*var_expansion(char **s,t_shell *shell)
+char	*var_expansion(char **s, t_shell *shell)
 {
 	char	*var_value;
 	char	*var_name;
@@ -45,10 +45,10 @@ char	*var_expansion(char **s,t_shell *shell)
 	if ((*s)[0] == '?')
 	{
 		*s += 1;
-		return (ft_itoa(shell->status));
+		return (ft_itoa(shell->exit_status));
 	}
 	var_name_len = 0;
-	while (!ft_strchr('\'"$ \0', (*s)[var_name_len]) && (*s)[var_name_len])
+	while (!ft_strchr("'\"$ \0", (*s)[var_name_len]) && (*s)[var_name_len])
 		var_name_len++;
 	var_name = ft_substr(*s, 0, var_name_len);
 	var_value = ft_getenv(shell->env, var_name);
