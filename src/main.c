@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 08:37:12 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/27 16:31:21 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/30 17:30:55 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int ac, char **av, char **envp)
 		{
 			process_input(shell, input);
 			restore_fd(shell);//restore_fd
-			run_signals(3);
+			run_signals(3, shell);
 			free_tree(shell->current_cmd);
 			shell->current_cmd = NULL;
 			free(input);
@@ -114,7 +114,7 @@ void	process_input(t_shell *shell, char *input)
 {
 	if (!build_tree(shell, input))
 		return ;
-	run_signals(2);
+	run_signals(2, shell);
 	run_input(shell->current_cmd, shell);
 }
 
@@ -123,7 +123,7 @@ int		get_input(char **line, t_shell *shell)
 	char	*prompt;
 
 	prompt = init_prompt(shell);
-	run_signals(1);
+	run_signals(1, shell);
 	*line = readline(prompt);
 	free(prompt);
 	if (!*line)
