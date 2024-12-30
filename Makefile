@@ -6,7 +6,7 @@
 #    By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/17 12:15:22 by plesukja          #+#    #+#              #
-#    Updated: 2024/12/30 18:51:27 by plesukja         ###   ########.fr        #
+#    Updated: 2024/12/30 19:19:21 by plesukja         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -115,7 +115,7 @@ RM		    := rm -f
 
 ${NAME}:	${OBJS}
 			@echo "$(GREEN)Compilation ${CLR_RMV}of ${YELLOW}$(NAME) ${CLR_RMV}..."
-			${CC} ${FLAGS} -o ${NAME} ${OBJS}
+			${CC} ${FLAGS} -lreadline -o ${NAME} ${OBJS}
 			@echo "$(GREEN)$(NAME) created[0m ✔️"
 
 all:		${NAME}
