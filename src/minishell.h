@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 08:36:54 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 01:13:17 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/30 15:32:16 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ void	double_quote_handler(char **s, char **result);
 void	double_quote_dollar_handler(char **s, char **result, t_shell *shell);
 void	dollar_sign_handler(char **s, char **result, t_shell *shell);
 void	character_handler(char **result, char **s);
-char	*var_expansion(char **s,t_shell *shell);//recheck again
+char	*var_expansion(char **s, t_shell *shell);//recheck again
 char	*ft_strjoin_free(char *s1, char *s2);
 bool	is_empty(char **s);
 
@@ -188,14 +188,33 @@ void	run_builtin_cd(t_shell *shell, char **args);//-----------------
 void	run_builtin_echo(t_shell *shell, char **args);
 void	run_builtin_env(t_shell *shell, t_env *env);
 void	run_builtin_exit(t_shell *shell, char **args);
+void	run_builtin_pwd(t_shell *shell);
+void	run_builtin_unset(t_shell *shell, char **args);
 void	run_builtin_export(t_shell *shell, char **args);//-----------------
+void	sort_env(t_env **env);
 void	print_sorted_env(t_env **env);
 void	add_or_update_env_var(t_env **env, char *var);
 
 //****************/ utils
+char	*ft_strndup(char *src, size_t n);
+int		ft_strcmp(const char *s1, const char *s2);
+int		array_len(char **array);
+void	restore_fd(t_shell *shell);
+
 //****************/ clean_and_exit
+t_token	*parser_error(char *message, t_token *token);
+void	close_fd(t_shell *shell);
+void	clean_and_exit(t_shell *shell);
+void	error_exit(char *message, t_shell *shell);
+
 //****************/ free
+void	free_array(char **array);
+void	free_env(t_env **env);
+
 //****************/ environment
+char	**env_to_arr(t_env *env, char **old_envp);
+char	*ft_getenv(t_env *env, char *key);
+void	free_tree(t_token *token);
 
 //***********************************//
 //////////////Alina section////////////
