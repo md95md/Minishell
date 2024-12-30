@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:59:12 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 14:42:53 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/30 14:45:01 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,3 @@ static bool	is_valid_key(char *var)
 	return (true);
 }
 
-void	free_env(t_env **env)
-{
-	t_env	*temp;
-
-	if (!env)
-		return ;
-	while (*env)
-	{
-		temp = *env;
-		*env = temp->next;
-		free(temp->key);
-		free(temp->value);
-		free(temp);
-	}
-	*env = NULL;
-}
