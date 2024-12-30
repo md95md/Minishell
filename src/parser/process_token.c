@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 22:51:34 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/21 19:10:44 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/30 16:42:28 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ t_token	*process_token(char *s)
 	char	*end;
 	t_token	*token;
 
+	token = NULL;
 	end = s + ft_strlen(s);
 	parse_token(s, token, end);
 	find_next_token(&s, end, "");
