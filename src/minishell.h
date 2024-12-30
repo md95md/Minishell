@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 08:36:54 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 18:01:11 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/30 18:26:19 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@
 #include <sys/fcntl.h> //open
 #include <errno.h> //errno
 #include <sys/stat.h>
+#include <sys/types.h> //waitpid
+#include <sys/wait.h> //waitpid
 
 #define WHITESPACE " \t\r\n\v"
-#define SIGNS "><|"
+#define SIGN "><|"
 
 typedef enum e_cmd_oprt_type
 {
