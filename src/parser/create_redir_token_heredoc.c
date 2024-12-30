@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   create_redir_token_heredoc.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 15:55:04 by plesukja          #+#    #+#             */
-/*   Updated: 2024/11/21 23:46:25 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/30 16:46:27 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include	"minishell.h"
+#include "../minishell.h"
 
-char	*generate_tmp_filename()
+char	*generate_temp_filename(void)
 {
 	static int	tmp_file_id;
 	char		*tmp_file_id_char;
@@ -58,7 +58,7 @@ void	heredoc_get_input(t_redir *redir)
 			break ;
 		}
 		ft_putstr_fd(heredoc_line, heredoc_fd);
-		ft_putchar_fd("\n", heredoc_fd);
+		ft_putchar_fd('\n', heredoc_fd);
 		free(heredoc_line);
 	}
 	close(heredoc_fd);
