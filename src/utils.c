@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 14:22:34 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 14:27:15 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/30 14:35:12 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,18 @@ int	array_len(char **array)
 	while (array[i])
 		i++;
 	return (i);
+}
+
+void	restore_fd(t_shell *shell)
+{
+	if (shell->default_stdin != STDIN_FILENO)
+	{
+		dup2(shell->default_stdin, STDIN_FILENO);
+		close(shell->default_stdin);
+	}
+	if (shell->default_stdout != STDOUT_FILENO)
+	{
+		dup2(shell->default_stdout, STDOUT_FILENO);
+		close(shell->default_stdout);
+	}
 }
