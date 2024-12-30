@@ -3,19 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   run_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 10:46:41 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 00:47:24 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/30 18:32:57 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+static char	**parse_arguments(char **args, t_shell *shell)
+{
+	char	**new_args;
+	char	*tmp;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	new_args = ft_calloc(array_len(args) + 1, sizeof(char *));
+	while (args[i])
+	{
+		tmp = unquote_and_expand_var(args[i], shell);
+		if (tmp[0])
+			new_args[j++] = tmp;
+		else
+			free(tmp);
+		i++;
+	}
+	return (new_args);
+}
+
 void	run_command(t_cmd *cmd, t_shell *shell)
 {
 	char	**new_args;
-	pid_t	pid;
 
 	if (!cmd->av[0])
 		return ;
@@ -34,32 +55,11 @@ void	run_command(t_cmd *cmd, t_shell *shell)
 	free_array(new_args);
 }
 
-static char	**parse_arguments(char **args, t_shell *shell)
-{
-	char	**new_args;
-	char	*tmp;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	new_args = ft_calloc(array_len(args) + 1, sizeof(char *))
-	while (args[i])
-	{
-		tmp = unquote_and_expand_var(args[i], shell);
-		if (tmp[0])
-			new_args[j++] = tmp;
-		else
-			free(tmp);
-		i++;
-	}
-	return (new_args);
-}
-
 void	fork_and_execute(char **new_args, t_shell *shell)
 {
 	pid_t	pid;
-	int		statu
+	int		status;
+
 	pid = fork();
 	if (pid < 0)
 		error_exit("fork failed", shell);
