@@ -3,30 +3,22 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+         #
+#    By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/12/30 10:41:49 by plesukja          #+#    #+#              #
-#    Updated: 2024/12/30 10:48:23 by plesukja         ###   ########.fr        #
+#    Created: 2024/12/17 12:15:22 by plesukja          #+#    #+#              #
+#    Updated: 2024/12/30 18:28:43 by plesukja         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
+######## CONFIG ########
 
-CC = cc
-## MAC
-CC = cc -fsanitize=address
-# ## original
-# CFLAGS = -Wall -Wextra -Werror -I/opt/homebrew/Cellar/readline/8.2.13/include
-CFLAGS = -Wall -Wextra -Werror -I/usr/local/Cellar/readline/8.2.13/include -v
-# ## LINUX
-# CFLAGS = -Wall -Wextra -Werror
-LIBFT = libft/
-LIBFT_A = $(LIBFT)libft.a
-HEAD = includes
-SRCDIR = srcs
-BINDIR = bin
+NAME        := minishell
+CC          := cc
+FLAGS       := -Wall -Wextra -Werror 
 
-SRCS = libft/get_next_line/get_next_line_bonus.c \
+######## PROGRAM'S SRCS ########
+
+SRCS		:=	libft/get_next_line/get_next_line_bonus.c \
 				libft/get_next_line/get_next_line.c \
 				libft/get_next_line/get_next_line_utils.c \
 				libft/get_next_line/get_next_line_utils_bonus.c \
@@ -82,56 +74,59 @@ SRCS = libft/get_next_line/get_next_line_bonus.c \
 				src/execute/builtins/env.c \
 				src/execute/builtins/cd.c \
 				src/execute/builtins/exit.c \
-				src/execute/builtins/export_no_var.c \
+				src/execute/builtins/export_no_var1.c \
+				src/execute/builtins/export_no_var2.c \
 				src/execute/builtins/export_with_var.c \
 				src/execute/builtins/run_builtin.c \
 				src/execute/execute.c \
 				src/execute/environment.c \
 				src/execute/run_input.c \
+				src/execute/run_command.c \
+				src/execute/run_redir.c \
+				src/execute/run_pipe.c \
 				src/parser/create_token.c \
 				src/parser/process_token.c \
 				src/parser/create_redir_token_heredoc.c \
 				src/parser/parse_token.c \
 				src/parser/procure_token_sign.c \
+				src/clean_and_exit.c \
+				src/free.c \
 				src/signal.c \
 				src/main.c \
 				src/utils.c \
+						  
+OBJS        := $(SRCS:.c=.o)
 
-OBJS = $(SRCS:%.c=$(BINDIR)/%.o)
+.c.o:
+	${CC} ${FLAGS} -c $< -o ${<:.c=.o}
 
-## Mac readline
-# ## original
-#MAC_READ_LINE = -I/opt/homebrew/Cellar/readline/8.2.13/include -L/opt/homebrew/Cellar/readline/8.2.13/lib -lreadline
-MAC_READ_LINE = -I/usr/local/Cellar/readline/8.2.13/include -L/usr/local/Cellar/readline/8.2.13/lib -lreadline -lcurse
-# ## to find homebrew path
-#brew list readline
+######## Makefile  obj ########
 
-all: $(NAME)
+CLR_RMV		:= \033[0m
+RED		    := \033[1;31m
+GREEN		:= \033[1;32m
+YELLOW		:= \033[1;33m
+BLUE		:= \033[1;34m
+CYAN 		:= \033[1;36m
+RM		    := rm -f
 
-# MAC
-$(NAME): $(OBJS) $(HEAD)/minishell.h $(LIBFT_A) Makefile
-	@echo "Compiling $(NAME)..."
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_A) $(MAC_READ_LINE) -I $(HEAD) -o $@ -v
-# #Linux 
-# $(NAME): $(OBJS) $(HEAD)/minishell.h $(LIBFT_A) Makefile
-# 	$(CC) $(CFLAGS) -lreadline -I $(HEAD) $(OBJS) $(LIBFT_A) -o $@
+${NAME}:	${OBJS}
+			@echo "$(GREEN)Compilation ${CLR_RMV}of ${YELLOW}$(NAME) ${CLR_RMV}..."
+			${CC} ${FLAGS} -o ${NAME} ${OBJS}
+			@echo "$(GREEN)$(NAME) created[0m ✔️"
 
-$(LIBFT_A):
-	make -C $(LIBFT)
+all:		${NAME}
 
-$(OBJS): $(BINDIR)%.o: $(SRCDIR)/%.c $(HEAD)/minishell.h $(LIBFT_A) Makefile
-	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) -c -I $(HEAD) -I$(LIBFT)/$(HEAD) $< -o $@
-# $(CC) $(CFLAGS) -c -I $(HEAD) -I$(LIBFT)/$(HEAD) $< -o $@
+bonus:		all
 
 clean:
-	rm -rf $(BINDIR)
-	make -C $(LIBFT) clean
+			@ ${RM} *.o */*.o */*/*.o */*/*/*.o
+			@ echo "$(RED)Deleting $(CYAN)$(NAME) $(CLR_RMV)objs ✔️"
 
-fclean: clean
-	rm -rf $(NAME)
-	make -C $(LIBFT) fclean
+fclean:		clean
+			@ ${RM} ${NAME}
+			@ echo "$(RED)Deleting $(CYAN)$(NAME) $(CLR_RMV)binary ✔️"
 
-re: fclean all
+re:			fclean all
 
 .PHONY: all clean fclean re
