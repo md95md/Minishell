@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:30:06 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 15:37:00 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/30 15:39:03 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	execute_error(char **args, char *s, char *message, t_shell *shell)
 static void	check_path_executable(char **args, t_shell *shell)
 {
 	char			*path;
-	struct	stat	statbuf;
+	struct stat		statbuf;
 
 	path = args[0];
 	if (stat(path, &statbuf) < 0)
@@ -81,7 +81,7 @@ static char	*get_file_path(char **args, t_shell *shell)
 		free (tmp);
 		if (access(file_path, X_OK) == 0)
 		{
-			free_aray(path_arr);
+			free_array(path_arr);
 			return (file_path);
 		}
 		free(file_path);
