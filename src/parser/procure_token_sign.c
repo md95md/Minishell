@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 23:54:15 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 16:03:12 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/30 18:25:20 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	get_quote_sign(char **curr)
 	int	quote_sign;
 
 	quote_sign = 'a';
-	while (**curr && !ft_strchr(signS, **curr) \
+	while (**curr && !ft_strchr(SIGN, **curr) \
 		&& !ft_strchr(WHITESPACE, **curr))
 	{
 		if (**curr == '\'' || **curr == '"')
