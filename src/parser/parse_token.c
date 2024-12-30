@@ -6,11 +6,23 @@
 /*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 23:37:54 by plesukja          #+#    #+#             */
-/*   Updated: 2024/11/19 17:32:34 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/30 15:55:53 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static t_token	*create_cmd_token(void)
+{
+	t_cmd	*cmd;
+
+	cmd = malloc(sizeof(*cmd));
+	if (!cmd)
+		return (NULL);
+	ft_memset(cmd, 0, sizeof(*cmd));
+	cmd->type = COMMAND;
+	return ((t_token *)cmd);
+}
 
 t_token	*parse_token(char *s, t_token *token, char *end)
 {
@@ -32,18 +44,6 @@ t_token	*parse_token(char *s, t_token *token, char *end)
 	return (token);
 }
 
-t_token	*create_cmd_token(void)
-{
-	t_cmd	*cmd;
-
-	cmd = malloc(sizeof(*cmd));
-	if (!cmd)
-		return (NULL);
-	ft_memset(cmd, 0, sizeof(*cmd));
-	cmd->type = COMMAND;
-	return ((t_token *)cmd);
-}
-
 t_token	*parse_redirs(t_token *token, char **ptr, char *end)
 {
 	char	*file_start;
@@ -56,7 +56,7 @@ t_token	*parse_redirs(t_token *token, char **ptr, char *end)
 		token_sign = get_token_sign(ptr, end, 0, 0);
 		file_token = get_token_sign(ptr, end, &file_start, &file_end);
 		if (file_token <= 0 || !file_start || (!*file_start))
-			return (parser_error("syntax error\n", token)); //*****parser_error******
+			return (parser_error("syntax error\n", token));
 		token = create_redir_token(token, *file_start, *file_end, token_sign);
 	}
 	return (token);
@@ -129,13 +129,15 @@ t_token	*parse_pipe(char **ptr, char *end)
 	if (find_next_token(ptr, end, "|"))
 	{
 		if (left->type == COMMAND && !((t_cmd *)left)->av[0])
-			return (parser_error("syntax error near unexpected token '|'\n", left));
+			return (parser_error("syntax error near unexpected token '|'\n", \
+				left));
 		get_token_sign(ptr, end, 0, 0);
 		right = parse_pipe(ptr, end);
 		if ((right->type == COMMAND && !((t_cmd *)right)->av[0]) || !right)
 		{
 			free_tree(right);
-			return (parser_error("syntax error near unexpected token '|'\n", right));
+			return (parser_error("syntax error near unexpected token '|'\n", \
+				right));
 		}
 		return (create_pipe_token(left, right));
 	}
