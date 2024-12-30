@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 20:41:27 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 18:42:52 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/30 19:12:53 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*unquote_and_expand_var(char *s, t_shell *shell)
 		if (*s == '\'')
 			single_quote_handler(&s, &result);
 		else if (*s == '"')
-			double_quote_handler(&s, &result);
+			double_quote_handler(&s, &result, shell);
 		else if (*s == '$')
 			dollar_sign_handler(&s, &result, shell);
 		else
