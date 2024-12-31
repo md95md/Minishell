@@ -6,11 +6,23 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 17:28:32 by plesukja          #+#    #+#             */
-/*   Updated: 2024/11/26 13:15:35 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/31 12:03:31 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static t_token	*chain_redir_node(t_token *token, t_redir *redir)
+{
+	t_redir	*last;
+
+	last = (t_redir *)token;
+	while (last->prior_token->type == REDIR)
+		last = (t_redir *)last->prior_token;
+	redir->prior_token = last->prior_token;
+	last->prior_token = (t_token *)redir;
+	return (token);
+}
 
 t_token	*create_redir_token(t_token *token, char *file_start, char *file_end, int token_sign)
 {
@@ -36,18 +48,6 @@ t_token	*create_redir_token(t_token *token, char *file_start, char *file_end, in
 	if (token->type == REDIR)
 		return (chain_redir_node(token, redir));
 	return ((t_token *)redir);
-}
-
-t_token	*chain_redir_node(t_token *token, t_redir *redir)
-{
-	t_redir	*last;
-
-	last = (t_redir *)token;
-	while (last->prior_token->type == REDIR)
-		last = (t_redir *)last->prior_token;
-	redir->prior_token = last->prior_token;
-	last->prior_token = (t_token *)redir;
-	return (token);
 }
 
 t_token	*create_pipe_token(t_token *left, t_token *right)
