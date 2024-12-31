@@ -6,13 +6,13 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 00:50:56 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/31 13:30:36 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/31 13:35:02 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	*ft_calloc(size_t size, size_t count)
+void	*ft_gnl_calloc(size_t size, size_t count)
 {
 	char	*tmp;
 	size_t	i;
@@ -31,7 +31,7 @@ void	*ft_calloc(size_t size, size_t count)
 	return (tmp);
 }
 
-int	ft_strlen(char *s)
+int	ft_gnl_strlen(char *s)
 {
 	int	i;
 
@@ -41,7 +41,7 @@ int	ft_strlen(char *s)
 	return (i);
 }
 
-char	*ft_strjoin(const char *s1, const char *s2)
+char	*ft_gnl_strjoin(const char *s1, const char *s2)
 {
 	char	*result;
 	int		i;
