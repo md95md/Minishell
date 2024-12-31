@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 17:14:35 by plesukja          #+#    #+#             */
-/*   Updated: 2024/07/28 07:49:38 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/31 13:27:26 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,23 +90,23 @@ static char	*copy_word(char *src, int len)
 	return (word);
 }
 
-int main(void)
-{
-    char **result = ft_split("0123,4", ',');
+// int main(void)
+// {
+//     char **result = ft_split("0123,4", ',');
 
-    if (!result)
-    {
-        printf("Error in ft_split\n");
-        return 1;
-    }
-    for (int i = 0; result[i] != NULL; i++)
-    {
-        printf("Result[%d]: %s\n", i, result[i]);
-    }
-    for (int i = 0; result[i] != NULL; i++)
-    {
-        free(result[i]);
-    }
-    free(result);
-    return 0;
-}
+//     if (!result)
+//     {
+//         printf("Error in ft_split\n");
+//         return 1;
+//     }
+//     for (int i = 0; result[i] != NULL; i++)
+//     {
+//         printf("Result[%d]: %s\n", i, result[i]);
+//     }
+//     for (int i = 0; result[i] != NULL; i++)
+//     {
+//         free(result[i]);
+//     }
+//     free(result);
+//     return 0;
+// }
