@@ -6,13 +6,13 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 17:24:26 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/31 13:26:42 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/31 13:40:51 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strjoin_free(char *s1, char *s2);
+char	*ft_gnl_strjoin_free(char *s1, char *s2);
 char	*ft_find_new_line(int fd, char *file_read);
 char	*ft_extract_line(char *file_read);
 char	*ft_get_remain(char *file_read);
@@ -32,11 +32,11 @@ char	*get_next_line(int fd)
 	return (extract_line);
 }
 
-char	*ft_strjoin_free(char *s1, char *s2)
+char	*ft_gnl_strjoin_free(char *s1, char *s2)
 {
 	char	*tmp;
 
-	tmp = ft_strjoin(s1, s2);
+	tmp = ft_gnl_strjoin(s1, s2);
 	free(s1);
 	return (tmp);
 }
@@ -47,8 +47,8 @@ char	*ft_find_new_line(int fd, char *file_read)
 	char	*buffer;
 
 	if (!file_read)
-		file_read = ft_calloc(sizeof(char), 1);
-	buffer = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
+		file_read = ft_gnl_calloc(sizeof(char), 1);
+	buffer = ft_gnl_calloc(sizeof(char), BUFFER_SIZE + 1);
 	if (!buffer)
 		return (free(buffer), free(file_read), (NULL));
 	num_read = 1;
@@ -60,8 +60,8 @@ char	*ft_find_new_line(int fd, char *file_read)
 		if (num_read == -1)
 			return (free(buffer), free(file_read), (NULL));
 		buffer[num_read] = '\0';
-		file_read = ft_strjoin_free(file_read, buffer);
-		if (ft_strchr(buffer, '\n'))
+		file_read = ft_gnl_strjoin_free(file_read, buffer);
+		if (ft_gnl_strchr(buffer, '\n'))
 			break ;
 	}
 	return (free(buffer), file_read);
@@ -77,7 +77,7 @@ char	*ft_extract_line(char *file_read)
 		return (NULL);
 	while (file_read[index] && file_read[index] != '\n')
 		index++;
-	result = ft_calloc(sizeof(char), index + 2);
+	result = ft_gnl_calloc(sizeof(char), index + 2);
 	if (!result)
 		return (NULL);
 	index = 0;
@@ -105,7 +105,7 @@ char	*ft_get_remain(char *file_read)
 		index++;
 	if (!file_read[index])
 		return (free(file_read), (NULL));
-	result = ft_calloc(sizeof(char), ft_strlen(file_read) - index + 1);
+	result = ft_gnl_calloc(sizeof(char), ft_gnl_strlen(file_read) - index + 1);
 	if (!result)
 		return (free(file_read), (NULL));
 	index++;
