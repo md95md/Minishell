@@ -6,7 +6,7 @@
 #    By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/17 12:15:22 by plesukja          #+#    #+#              #
-#    Updated: 2024/12/31 12:48:39 by plesukja         ###   ########.fr        #
+#    Updated: 2024/12/31 13:04:55 by plesukja         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,10 +24,8 @@ MAC_READ_LINE = -I/usr/local/Cellar/readline/8.2.13/include -L/usr/local/Cellar/
 
 ######## PROGRAM'S SRCS ########
 
-SRCS		:=	libft/get_next_line/get_next_line_bonus.c \
-				libft/get_next_line/get_next_line.c \
+SRCS		:=	libft/get_next_line/get_next_line.c \
 				libft/get_next_line/get_next_line_utils.c \
-				libft/get_next_line/get_next_line_utils_bonus.c \
 				libft/libft/ft_bzero.c \
 				libft/libft/ft_memcpy.c \
 				libft/libft/ft_strrchr.c \
@@ -128,7 +126,7 @@ RM		    := rm -f
 # ##MACOS
 ${NAME}:	${OBJS}
 			@echo "$(GREEN)Compilation ${CLR_RMV}of ${YELLOW}$(NAME) ${CLR_RMV}..."
-			${CC} ${FLAGS} ${MAC_readline} -o ${NAME} ${OBJS}
+			${CC} ${FLAGS} ${MAC_READ_LINE} -o ${NAME} ${OBJS}
 			@echo "$(GREEN)$(NAME) created[0m ✔️"
 			
 all:		${NAME}
