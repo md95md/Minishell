@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 00:50:56 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/31 13:35:02 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/31 13:42:22 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*ft_gnl_strjoin(const char *s1, const char *s2)
 
 	if (s1 == NULL && s2 == NULL)
 		return (NULL);
-	result_len = ft_strlen((char *)s1) + ft_strlen((char *)s2);
+	result_len = ft_gnl_strlen((char *)s1) + ft_gnl_strlen((char *)s2);
 	result = malloc (sizeof(char) * (result_len + 1));
 	if (!result)
 		return (NULL);
