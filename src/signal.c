@@ -44,6 +44,8 @@ static void	back_slash(t_shell *shell)
 // run_signals(1) For restoring prompt behavior // before the command is executed
 // run_signals(2) For normal signal handling // while executing command
 // run_signals(3) For exit handling
+//test
+
 void	run_signals(int sig, t_shell *shell)
 {
 	(void)shell;
