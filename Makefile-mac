@@ -15,12 +15,13 @@
 NAME        	:= minishell
 CC          	:= cc
 FLAGS       	:= -Wall -Wextra -Werror
-##LINUX_readline 	:= -lreadline
+LINUX_readline 	:= -lreadline
+INCLUDES = -I/usr/include/MAC_readline
 
 ## MAC_readline
 # ## original
 #MAC_READ_LINE = -I/opt/homebrew/Cellar/readline/8.2.13/include -L/opt/homebrew/Cellar/readline/8.2.13/lib -lreadline
-MAC_READ_LINE = -I/usr/local/Cellar/readline/8.2.13/include -L/usr/local/Cellar/readline/8.2.13/lib -lreadline
+##MAC_READ_LINE = -I/usr/local/Cellar/readline/8.2.13/include -L/usr/local/Cellar/readline/8.2.13/lib -lreadline
 
 ######## PROGRAM'S SRCS ########
 
@@ -118,15 +119,16 @@ CYAN 		:= \033[1;36m
 RM		    := rm -f
 
 # ##LINUX
-# ${NAME}:	${OBJS}
-# 			@echo "$(GREEN)Compilation ${CLR_RMV}of ${YELLOW}$(NAME) ${CLR_RMV}..."
-# 			${CC} ${FLAGS} ${LINUX_readline} -o ${NAME} ${OBJS}
-# 			@echo "$(GREEN)$(NAME) created[0m ✔️"
-# ##MACOS
+
 ${NAME}:	${OBJS}
 			@echo "$(GREEN)Compilation ${CLR_RMV}of ${YELLOW}$(NAME) ${CLR_RMV}..."
-			${CC} ${FLAGS} ${MAC_READ_LINE} -o ${NAME} ${OBJS}
+			${CC} ${FLAGS} ${LINUX_readline} -o ${NAME} ${OBJS}
 			@echo "$(GREEN)$(NAME) created[0m ✔️"
+# ##MACOS
+#${NAME}:	${OBJS}
+#			@echo "$(GREEN)Compilation ${CLR_RMV}of ${YELLOW}$(NAME) ${CLR_RMV}..."
+#			${CC} ${FLAGS} ${MAC_READ_LINE} -o ${NAME} ${OBJS}
+#			@echo "$(GREEN)$(NAME) created[0m ✔️"
 			
 all:		${NAME}
 

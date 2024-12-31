@@ -82,7 +82,7 @@ typedef struct s_shell
 }	t_shell;
 
 // ///****************/ main
-// void	init_shell(t_shell **shell, char **envp);
+void	init_shell(t_shell **shell, char **envp);
 // int		get_input(char **line, t_shell *shell);
 // void	process_input(t_shell *shell, char *input);
 // void	restore_fd(t_shell *shell);
@@ -91,11 +91,11 @@ typedef struct s_shell
 // void	clean_and_exit(t_shell *shell);
 
 // //****************/ init_shell
-// char	**get_env_arr(char **arr);
-// void	create_env_linked_list(t_env **env, char **envp);
+char	**get_env_arr(char **arr);
+void	create_env_linked_list(t_env **env, char **envp);
 
 // //****************/ get_input
-// char	*init_prompt(t_shell *shell);
+char	*init_prompt(t_shell *shell);
 // //run_signals(1);
 // //readline();
 // //add_history());
