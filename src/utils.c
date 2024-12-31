@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 14:22:34 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 14:35:12 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/31 12:52:12 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,28 @@ void	restore_fd(t_shell *shell)
 		dup2(shell->default_stdout, STDOUT_FILENO);
 		close(shell->default_stdout);
 	}
+}
+
+char	*ft_strndup(char *src, size_t n)
+{
+	char		*dest;
+	size_t		len;
+	size_t		i;
+
+	if (!src)
+		return (NULL);
+	len = ft_strlen(src);
+	if (n < len)
+		len = n;
+	dest = malloc(len + 1);
+	if (!dest)
+		return (NULL);
+	i = 0;
+	while (src[i] && i < n)
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }
