@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 13:22:34 by plesukja          #+#    #+#             */
-/*   Updated: 2024/04/29 22:38:24 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/31 13:46:06 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_putstr_count(char *str, int *length)
 	}
 }
 
-char	ft_toupper(char c)
+char	ft_printf_toupper(char c)
 {
 	if (c >= 'a' && c <= 'f')
 		return (c - 32);
@@ -100,7 +100,7 @@ void	ft_putnum(long long int nbr, int *length, int base, char d_i_x_or_X)
 		if (d_i_x_or_X == 'x' || d_i_x_or_X == 'd' || d_i_x_or_X == 'i')
 			str[i++] = base_chars[nbr % base];
 		else if (d_i_x_or_X == 'X')
-			str[i++] = ft_toupper(base_chars[nbr % base]);
+			str[i++] = ft_printf_toupper(base_chars[nbr % base]);
 		nbr /= base;
 	}
 	while (--i >= 0)
