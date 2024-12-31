@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 17:24:26 by plesukja          #+#    #+#             */
-/*   Updated: 2024/09/13 15:27:11 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/31 13:26:42 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,16 +120,16 @@ char	*ft_get_remain(char *file_read)
 	return (result);
 }
 
-#include <fcntl.h>
-#include <stdio.h>
-int	main(void)
-{
-	int	fd;
-	fd = open ("/Users/hg/Library/CloudStorage/OneDrive-Personal/Project/42Bangkok/42Projects/get_next_line_github/test.txt", O_RDONLY);
-	if (fd == -1)
-	{
-        perror("Error opening file");
-        return 1;
-    }
-	printf("%s", get_next_line(fd));
-}
+// #include <fcntl.h>
+// #include <stdio.h>
+// int	main(void)
+// {
+// 	int	fd;
+// 	fd = open ("/Users/hg/Library/CloudStorage/OneDrive-Personal/Project/42Bangkok/42Projects/get_next_line_github/test.txt", O_RDONLY);
+// 	if (fd == -1)
+// 	{
+//         perror("Error opening file");
+//         return 1;
+//     }
+// 	printf("%s", get_next_line(fd));
+// }
