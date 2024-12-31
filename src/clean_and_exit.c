@@ -6,25 +6,11 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 16:29:54 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/31 12:18:42 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/31 13:37:14 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	restore_fd(t_shell *shell)
-{
-	if (shell->default_stdin != STDIN_FILENO)
-	{
-		dup2(shell->default_stdin, STDIN_FILENO);
-		close(shell->default_stdin);
-	}
-	if (shell->default_stdout != STDOUT_FILENO)
-	{
-		dup2(shell->default_stdout, STDOUT_FILENO);
-		close(shell->default_stdout);
-	}
-}
 
 t_token	*parser_error(char *message, t_token *token)
 {
