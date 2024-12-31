@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 00:17:49 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 15:00:15 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/31 11:58:51 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,20 @@
 static bool	has_too_many_arguments(char **args)
 {
 	return (args[1] && args[2]);
+}
+
+static void	handle_cd_error(t_shell *shell, char *msg, char *old_pwd)
+{
+	if (msg)
+	{
+		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+		ft_putendl_fd(msg, STDERR_FILENO);
+	}
+	else
+		perror("minishell: cd");
+	if (old_pwd)
+		free (old_pwd);
+	shell->exit_status = EXIT_FAILURE;
 }
 
 //getenv returns a pointer to the value in the env
@@ -63,19 +77,6 @@ static void	update_path_var(t_env *env, char *old_pwd, char *new_pwd)
 	free(node_new_pwd);
 }
 
-static void	handle_cd_error(t_shell *shell, char *msg, char *old_pwd)
-{
-	if (msg)
-	{
-		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
-		ft_putendl_fd(msg, STDERR_FILENO);
-	}
-	else
-		perror("minishell: cd");
-	if (old_pwd)
-		free (old_pwd);
-	shell->exit_status = EXIT_FAILURE;
-}
 
 void	run_builtin_cd(t_shell *shell, char **args)
 {
