@@ -3,18 +3,24 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+         #
+#    By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/17 12:15:22 by plesukja          #+#    #+#              #
-#    Updated: 2024/12/30 19:19:21 by plesukja         ###   ########.fr        #
+#    Updated: 2024/12/31 12:48:39 by plesukja         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 ######## CONFIG ########
 
-NAME        := minishell
-CC          := cc
-FLAGS       := -Wall -Wextra -Werror 
+NAME        	:= minishell
+CC          	:= cc
+FLAGS       	:= -Wall -Wextra -Werror
+##LINUX_readline 	:= -lreadline
+
+## MAC_readline
+# ## original
+#MAC_READ_LINE = -I/opt/homebrew/Cellar/readline/8.2.13/include -L/opt/homebrew/Cellar/readline/8.2.13/lib -lreadline
+MAC_READ_LINE = -I/usr/local/Cellar/readline/8.2.13/include -L/usr/local/Cellar/readline/8.2.13/lib -lreadline
 
 ######## PROGRAM'S SRCS ########
 
@@ -87,16 +93,17 @@ SRCS		:=	libft/get_next_line/get_next_line_bonus.c \
 				src/execute/unquote_and_expand_var1.c \
 				src/execute/unquote_and_expand_var2.c \
 				src/execute/unquote_and_expand_var3.c \
-				src/parser/create_token.c \
 				src/parser/process_token.c \
-				src/parser/create_redir_token_heredoc.c \
 				src/parser/parse_token.c \
 				src/parser/procure_token_sign.c \
-				src/clean_and_exit.c \
-				src/free.c \
-				src/signal.c \
+				src/parser/create_token.c \
+				src/parser/create_redir_token_heredoc.c \
 				src/main.c \
+				src/get_and_process_input.c \
+				src/signal.c \
 				src/utils.c \
+				src/free.c \
+				src/clean_and_exit.c \
 						  
 OBJS        := $(SRCS:.c=.o)
 
@@ -113,11 +120,17 @@ BLUE		:= \033[1;34m
 CYAN 		:= \033[1;36m
 RM		    := rm -f
 
+# ##LINUX
+# ${NAME}:	${OBJS}
+# 			@echo "$(GREEN)Compilation ${CLR_RMV}of ${YELLOW}$(NAME) ${CLR_RMV}..."
+# 			${CC} ${FLAGS} ${LINUX_readline} -o ${NAME} ${OBJS}
+# 			@echo "$(GREEN)$(NAME) created[0m ✔️"
+# ##MACOS
 ${NAME}:	${OBJS}
 			@echo "$(GREEN)Compilation ${CLR_RMV}of ${YELLOW}$(NAME) ${CLR_RMV}..."
-			${CC} ${FLAGS} -lreadline -o ${NAME} ${OBJS}
+			${CC} ${FLAGS} ${MAC_readline} -o ${NAME} ${OBJS}
 			@echo "$(GREEN)$(NAME) created[0m ✔️"
-
+			
 all:		${NAME}
 
 bonus:		all
