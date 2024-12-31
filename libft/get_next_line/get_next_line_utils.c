@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 00:50:56 by plesukja          #+#    #+#             */
-/*   Updated: 2024/03/28 11:59:21 by plesukja         ###   ########.fr       */
+/*   Updated: 2024/12/31 13:30:36 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	return (result);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_gnl_strchr(const char *s, int c)
 {
 	while (*s && *s != c)
 		s++;
