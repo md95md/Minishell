@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 23:37:54 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 16:49:50 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/01 23:10:55 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static t_token	*parse_redirs(t_token *token, char **ptr, char *end)
 	{
 		token_sign = get_token_sign(ptr, end, 0, 0);
 		file_token = get_token_sign(ptr, end, &file_start, &file_end);
-		if (file_token <= 0 || !file_start || (!*file_start))
+		if (!ft_strchr("a'\"", file_token) || !file_start || (!*file_start))
 			return (parser_error("syntax error\n", token));
 		token = create_redir_token(token, file_start, file_end, token_sign);
 	}
