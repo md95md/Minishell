@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 23:37:54 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/01 23:10:55 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/02 01:00:35 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static t_token	*create_cmd_token(void)
 {
 	t_cmd	*cmd;
 
+	printf("create_cmd_token\n");
 	cmd = malloc(sizeof(*cmd));
 	if (!cmd)
 		return (NULL);
@@ -31,6 +32,7 @@ static t_token	*parse_redirs(t_token *token, char **ptr, char *end)
 	int		token_sign;
 	int		file_token;
 
+	printf("parse_redirs\n");
 	while (find_next_token(ptr, end, "><"))
 	{
 		token_sign = get_token_sign(ptr, end, 0, 0);
@@ -50,6 +52,7 @@ char *end)
 	int		ac;
 	int		token_sign;
 
+	printf("parse_command_args\n");
 	ac = 0;
 	while (!find_next_token(ptr, end, "|"))
 	{
@@ -65,6 +68,7 @@ char *end)
 	}
 	cmd->av[ac] = 0;
 	cmd->end_av[ac] = 0;
+	printf("parse_command_args: finished\n");
 	return (token);
 }
 
@@ -73,6 +77,7 @@ static t_token	*parse_pipe(char **ptr, char *end)
 	t_token	*left;
 	t_token	*right;
 
+	printf("parse_pipe\n");
 	left = parse_token(*ptr, NULL, end);
 	if (!left)
 		return (NULL);
@@ -98,6 +103,7 @@ t_token	*parse_token(char *s, t_token *token, char *end)
 {
 	t_cmd	*cmd;
 
+	printf("parse_token\n");
 	token = create_cmd_token();
 	if (!token)
 		return (NULL);
@@ -108,6 +114,7 @@ t_token	*parse_token(char *s, t_token *token, char *end)
 	token = parse_command_args(token, cmd, &s, end);
 	if (!token)
 		return (NULL);
+	printf("parse_token: after parse_command_args()\n");
 	token = parse_pipe(&s, end);
 	if (!token)
 		return (NULL);
