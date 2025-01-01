@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_token.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 22:51:34 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 16:42:28 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/02 00:51:10 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ t_token	*process_token(char *s)
 	char	*end;
 	t_token	*token;
 
+	printf("process_token\n");
 	token = NULL;
 	end = s + ft_strlen(s);
 	parse_token(s, token, end);
