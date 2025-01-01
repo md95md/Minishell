@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 08:37:12 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/01 20:40:25 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/02 00:53:56 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	main(int ac, char **av, char **envp)
 	{
 		if (get_input(&input, shell) != -1)
 		{
+			printf("main: before process_input\n");
 			process_input(shell, input);
 			restore_fd(shell);//restore_fd
 			run_signals(3, shell);
@@ -112,6 +113,7 @@ void	create_env_linked_list(t_env **env, char **envp)
 
 void	process_input(t_shell *shell, char *input)
 {
+	printf("process_input\n");
 	if (!build_tree(shell, input))
 		return ;
 	run_signals(2, shell);
@@ -125,6 +127,7 @@ int		get_input(char **line, t_shell *shell)
 	prompt = init_prompt(shell);
 	run_signals(1, shell);
 	*line = readline(prompt);
+	printf("get_input: after readline: line = %s\n", *line);
 	free(prompt);
 	if (!*line)
 		return (-1);
@@ -152,6 +155,7 @@ char	*init_prompt(t_shell *shell)
 
 bool	build_tree(t_shell *shell, char *input)
 {
+	printf("build_tree\n");
 	shell->current_cmd = process_token(input);
 	if (!shell->current_cmd)
 	{
@@ -170,5 +174,6 @@ bool	build_tree(t_shell *shell, char *input)
 		shell->has_pipe = 1;
 	shell->default_stdin = dup(STDIN_FILENO);
 	shell->default_stdout = dup(STDOUT_FILENO);
+	printf("build_tree: finished\n");
 	return (true);
 }
