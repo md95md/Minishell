@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 12:35:44 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/02 14:42:06 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/02 18:51:01 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	process_input(t_shell *shell, char *input)
 	printf("process_input\n");
 	if (!build_tree(shell, input))
 		return ;
+	printf("process_input: before run_signals\n");
 	run_signals(2, shell);
 	run_input(shell->current_cmd, shell);
 }
@@ -61,6 +62,7 @@ bool	build_tree(t_shell *shell, char *input)
 	{
 		shell->exit_status = 2;
 		free(input);
+		printf(".build_tree\n");
 		return (false);
 	}
 	else if (shell->current_cmd->type == COMMAND \
@@ -68,11 +70,13 @@ bool	build_tree(t_shell *shell, char *input)
 	{
 		free_tree(shell->current_cmd);
 		free(input);
+		printf("..build_tree\n");
 		return (false);
 	}
 	if (shell->current_cmd->type == PIPE)
 		shell->has_pipe = 1;
 	shell->default_stdin = dup(STDIN_FILENO);
 	shell->default_stdout = dup(STDOUT_FILENO);
+	printf("...build_tree\n");
 	return (true);
 }
