@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 08:37:12 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/01 18:07:54 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/02 14:43:37 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,10 @@ int	main(int ac, char **av, char **envp)
 	shell = NULL;
 	input = NULL;
 	init_shell(&shell, envp);
-	printf("main: after init_shell()\n");
 	while (1)
 	{
 		if (get_input(&input, shell) != -1)
 		{
-			printf("main: get_input != -1\n");
 			process_input(shell, input);
 			restore_fd(shell);
 			run_signals(3, shell);
