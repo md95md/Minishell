@@ -97,6 +97,7 @@ SRCS		:=	libft/get_next_line/get_next_line.c \
 				src/parser/create_token.c \
 				src/parser/create_redir_token_heredoc.c \
 				src/main.c \
+				src/get_and_process_input.c \
 				src/signal.c \
 				src/utils.c \
 				src/free.c \
