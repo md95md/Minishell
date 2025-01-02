@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_and_process_input.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 12:35:44 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/01 18:32:38 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/02 13:38:40 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,13 @@ static char	*init_prompt(t_shell *shell)
 	prompt = NULL;
 	if (!pwd || !user)
 		return (ft_strdup("$ "));
+	prompt = ft_strjoin(user, "@:~");
+	prompt = ft_strjoin(prompt, pwd);
+	prompt = ft_strjoin(prompt, "$ ");
 	return (prompt);
 }
 
-int		get_input(char **line, t_shell *shell)
+int	get_input(char **line, t_shell *shell)
 {
 	char	*prompt;
 
