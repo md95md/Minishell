@@ -6,58 +6,14 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 08:37:12 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/02 00:53:56 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/01 18:07:54 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stddef.h>
 
-int	main(int ac, char **av, char **envp)
-{
-	t_shell	*shell;
-	char	*input;
-
-	(void)ac;
-	(void)av;
-	shell = NULL;
-	input = NULL;
-	init_shell(&shell, envp);
-	while (1)
-	{
-		if (get_input(&input, shell) != -1)
-		{
-			printf("main: before process_input\n");
-			process_input(shell, input);
-			restore_fd(shell);//restore_fd
-			run_signals(3, shell);
-			free_tree(shell->current_cmd);
-			shell->current_cmd = NULL;
-			free(input);
-		}
-	}
-	if (input)
-		free(input);
-	clean_and_exit(shell);
-	return (0);
-}
-
-void	init_shell(t_shell **shell, char **envp)
-{
-	*shell = ft_calloc(1, sizeof(t_shell));
-	if (!(*shell))
-		exit(EXIT_FAILURE);
-	(*shell)->env_arr = get_env_arr(envp);
-	create_env_linked_list(&(*shell)->env, envp);
-	(*shell)->has_pipe = 0;
-	(*shell)->exit_status = 0;
-	(*shell)->default_stdin = STDIN_FILENO;
-	(*shell)->default_stdout = STDOUT_FILENO;
-	(*shell)->in_fd = STDIN_FILENO;
-	(*shell)->out_fd = STDOUT_FILENO;
-}
-
-char	**get_env_arr(char **arr)
+static char	**get_env_arr(char **arr)
 {
 	char	**new_arr;
 	int		i;
@@ -83,7 +39,7 @@ char	**get_env_arr(char **arr)
 	return (new_arr);
 }
 
-void	create_env_linked_list(t_env **env, char **envp)
+static void	create_env_linked_list(t_env **env, char **envp)
 {
 	t_env	*env_node;
 	t_env	*last;
@@ -111,69 +67,47 @@ void	create_env_linked_list(t_env **env, char **envp)
 	}
 }
 
-void	process_input(t_shell *shell, char *input)
+static void	init_shell(t_shell **shell, char **envp)
 {
-	printf("process_input\n");
-	if (!build_tree(shell, input))
-		return ;
-	run_signals(2, shell);
-	run_input(shell->current_cmd, shell);
+	*shell = ft_calloc(1, sizeof(t_shell));
+	if (!(*shell))
+		exit(EXIT_FAILURE);
+	(*shell)->env_arr = get_env_arr(envp);
+	create_env_linked_list(&(*shell)->env, envp);
+	(*shell)->has_pipe = 0;
+	(*shell)->exit_status = 0;
+	(*shell)->default_stdin = STDIN_FILENO;
+	(*shell)->default_stdout = STDOUT_FILENO;
+	(*shell)->in_fd = STDIN_FILENO;
+	(*shell)->out_fd = STDOUT_FILENO;
 }
 
-int		get_input(char **line, t_shell *shell)
+int	main(int ac, char **av, char **envp)
 {
-	char	*prompt;
+	t_shell	*shell;
+	char	*input;
 
-	prompt = init_prompt(shell);
-	run_signals(1, shell);
-	*line = readline(prompt);
-	printf("get_input: after readline: line = %s\n", *line);
-	free(prompt);
-	if (!*line)
-		return (-1);
-	if (*line && **line)
-		add_history(*line);
+	(void)ac;
+	(void)av;
+	shell = NULL;
+	input = NULL;
+	init_shell(&shell, envp);
+	printf("main: after init_shell()\n");
+	while (1)
+	{
+		if (get_input(&input, shell) != -1)
+		{
+			printf("main: get_input != -1\n");
+			process_input(shell, input);
+			restore_fd(shell);
+			run_signals(3, shell);
+			free_tree(shell->current_cmd);
+			shell->current_cmd = NULL;
+			free(input);
+		}
+	}
+	if (input)
+		free(input);
+	clean_and_exit(shell);
 	return (0);
-}
-
-char	*init_prompt(t_shell *shell)
-{
-	char	*pwd;
-	char	*user;
-	char	*prompt;
-
-	pwd = ft_getenv(shell->env, "PWD");
-	user = ft_getenv(shell->env, "USER");
-	prompt = NULL;
-	if (!pwd || !user)
-		return (ft_strdup("$ "));
-	prompt = ft_strjoin(user, "@:~");
-	prompt = ft_strjoin(prompt, pwd);
-	prompt = ft_strjoin(prompt, "$ ");
-	return (prompt);
-}
-
-bool	build_tree(t_shell *shell, char *input)
-{
-	printf("build_tree\n");
-	shell->current_cmd = process_token(input);
-	if (!shell->current_cmd)
-	{
-		shell->exit_status = 2;
-		free(input);
-		return (false);
-	}
-	else if (shell->current_cmd->type == COMMAND \
-		&& !((t_cmd *)(shell->current_cmd))->av[0])
-	{
-		free_tree(shell->current_cmd);
-		free(input);
-		return (false);
-	}
-	if (shell->current_cmd->type == PIPE)
-		shell->has_pipe = 1;
-	shell->default_stdin = dup(STDIN_FILENO);
-	shell->default_stdout = dup(STDOUT_FILENO);
-	printf("build_tree: finished\n");
-	return (true);
 }
