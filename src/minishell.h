@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 08:36:54 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 18:49:27 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/02 14:31:05 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include <sys/types.h> //waitpid
 #include <sys/wait.h> //waitpid
 
+#define MAXARGS 10
 #define WHITESPACE " \t\r\n\v"
 #define SIGN "><|"
 
@@ -57,8 +58,8 @@ typedef struct s_redir
 typedef struct s_cmd
 {
 	t_token_type		type;
-	char				**av;
-	char				*end_av[];
+	char				*av[MAXARGS + 1];
+	char				*end_av[MAXARGS + 1];
 }	t_cmd;
 
 typedef struct s_env
