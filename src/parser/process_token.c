@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 22:51:34 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/02 17:36:41 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/02 18:34:43 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static t_token	*null_terminate(t_token *token)
 		null_terminate(pipe->left);
 		null_terminate(pipe->right);
 	}
+	printf ("null_terminate: finished\n");
 	return (token);
 }
 
@@ -60,7 +61,7 @@ t_token	*process_token(char *s)
 	printf ("process_token: after find_next_token\n");
 	if (s != end)
 	{
-		printf ("process_token: syntax error\n");
+		printf ("process_token: s != end\n");
 		return (NULL);
 	}
 	printf ("process_token: before null_terminate\n");
