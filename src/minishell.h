@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 08:36:54 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/03 23:40:20 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/03 23:57:23 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ t_token	*process_token(char *s);
 
 
 //****************/ process_token
-t_token	*parse_token(char *s, t_token *token, char *end);
+t_token	*parse_token(char **s, t_token *token, char *end);
 // t_token	*create_cmd_token(void);
 // t_token	*parse_redirs(t_token *token, char **ptr, char *end);
 // t_token	*parse_command_args(t_token *token, t_cmd *cmd, char **ptr, char *end);
