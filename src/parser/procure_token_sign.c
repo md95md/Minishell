@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   procure_token_sign.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 23:54:15 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 18:25:20 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/03 23:44:39 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,26 @@ static int	get_redir_sign(char **cur)
 	return (redir_sign);
 }
 
-int	get_token_sign(char **ptr, char *end, char **token_start, char **token_end)
+static int	get_token_sign(char **cur)
+{
+	int	token_sign;
+
+	token_sign = **cur;
+	if (!(**cur))
+		token_sign = 0;
+	else if (**cur == '|')
+	{
+		token_sign = **cur;
+		(*cur)++;
+	}
+	else if (**cur == '>' || **cur == '<')
+		token_sign = get_redir_sign(cur);
+	else
+		token_sign = get_quote_sign(cur);
+	return (token_sign);
+}
+
+int	go_get_token_sign(char **ptr, char *end, char **token_start, char **token_end)
 {
 	int		token_sign;
 	char	*cur;
@@ -73,19 +92,11 @@ int	get_token_sign(char **ptr, char *end, char **token_start, char **token_end)
 		cur++;
 	if (token_start)
 		*token_start = cur;
-	if (!(*cur))
-		token_sign = 0;
-	else if (*cur == '|')
-	{
-		token_sign = *cur;
-		(*cur)++;
-	}
-	else if (*cur == '>' || *cur == '<')
-		token_sign = get_redir_sign(&cur);
-	else
-		token_sign = get_quote_sign(&cur);
+	token_sign = get_token_sign(&cur);
 	if (token_end)
 		*token_end = cur;
+	while (cur < end && ft_strchr(WHITESPACE, *cur))
+		cur++;
 	*ptr = cur;
 	return (token_sign);
 }
