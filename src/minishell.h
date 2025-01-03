@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 08:36:54 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/02 16:20:48 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/03 23:40:20 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ t_token	*parse_token(char *s, t_token *token, char *end);
 // t_token	*parse_redirs(t_token *token, char **ptr, char *end);
 // t_token	*parse_command_args(t_token *token, t_cmd *cmd, char **ptr, char *end);
 t_token	*parse_pipe(char **ptr, char *end);
-int	get_token_sign(char **ptr, char *end, char **token_start, char **token_end);
+int		go_get_token_sign(char **ptr, char *end, char **token_start, char **token_end);
 t_token	*create_pipe_token(t_token *left, t_token *right);
 t_token	*create_redir_token(t_token *token, char *file_start, char *file_end, int token_sign);
 void	heredoc_get_input(t_redir *redir);
