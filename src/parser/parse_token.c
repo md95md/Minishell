@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 23:37:54 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/03 23:42:34 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/03 23:57:28 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_token	*parse_pipe(char **ptr, char *end)
 	t_token	*left;
 	t_token	*right;
 
-	left = parse_token(*ptr, NULL, end);
+	left = parse_token(ptr, NULL, end);
 	if (!left)
 		return (NULL);
 	if (find_next_token(ptr, end, "|"))
@@ -94,7 +94,7 @@ t_token	*parse_pipe(char **ptr, char *end)
 	return (left);
 }
 
-t_token	*parse_token(char *s, t_token *token, char *end)
+t_token	*parse_token(char **s, t_token *token, char *end)
 {
 	t_cmd	*cmd;
 
@@ -102,10 +102,10 @@ t_token	*parse_token(char *s, t_token *token, char *end)
 	if (!token)
 		return (NULL);
 	cmd = (t_cmd *)token;
-	token = parse_redirs(token, &s, end);
+	token = parse_redirs(token, s, end);
 	if (!token)
 		return (NULL);
-	token = parse_command_args(token, cmd, &s, end);
+	token = parse_command_args(token, cmd, s, end);
 	if (!token)
 		return (NULL);
 	return (token);
