@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 23:37:54 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/02 16:31:00 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/03 23:42:34 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ static t_token	*parse_redirs(t_token *token, char **ptr, char *end)
 
 	while (find_next_token(ptr, end, "><"))
 	{
-		token_sign = get_token_sign(ptr, end, 0, 0);
-		file_token = get_token_sign(ptr, end, &file_start, &file_end);
+		token_sign = go_get_token_sign(ptr, end, 0, 0);
+		file_token = go_get_token_sign(ptr, end, &file_start, &file_end);
 		if (!ft_strchr("a'\"", file_token) || !file_start || (!*file_start))
 			return (parser_error("syntax error\n", token));
 		token = create_redir_token(token, file_start, file_end, token_sign);
@@ -53,7 +53,7 @@ char *end)
 	ac = 0;
 	while (!find_next_token(ptr, end, "|"))
 	{
-		token_sign = get_token_sign(ptr, end, &token_start, &token_end);
+		token_sign = go_get_token_sign(ptr, end, &token_start, &token_end);
 		if (token_sign == 0)
 			break ;
 		if (token_sign == -1 || !ft_strchr("a'\"", token_sign))
@@ -81,7 +81,7 @@ t_token	*parse_pipe(char **ptr, char *end)
 		if (left->type == COMMAND && !((t_cmd *)left)->av[0])
 			return (parser_error("syntax error near unexpected token '|'\n", \
 				left));
-		get_token_sign(ptr, end, 0, 0);
+		go_get_token_sign(ptr, end, 0, 0);
 		right = parse_pipe(ptr, end);
 		if ((right->type == COMMAND && !((t_cmd *)right)->av[0]) || !right)
 		{
