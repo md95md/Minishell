@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 10:46:41 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/04 13:36:17 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/04 14:02:42 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,18 @@ static char	**parse_arguments(char **args, t_shell *shell)
 	int		i;
 	int		j;
 
-	printf ("parse_arguments\n");
 	i = 0;
 	j = 0;
 	new_args = ft_calloc(array_len(args) + 1, sizeof(char *));
 	while (args[i])
 	{
-		printf (".parse_arguments\n");
 		tmp = unquote_and_expand_var(args[i], shell);
-		printf ("..parse_arguments\n");
 		if (tmp[0])
 			new_args[j++] = tmp;
 		else
 			free(tmp);
 		i++;
 	}
-	printf ("parse_arguments: finished\n");
 	return (new_args);
 }
 
@@ -42,7 +38,6 @@ void	run_command(t_cmd *cmd, t_shell *shell)
 {
 	char	**new_args;
 
-	printf ("run_command: %s\n", cmd->av[0]);
 	if (!cmd->av[0])
 		return ;
 	new_args = parse_arguments(cmd->av, shell);
@@ -57,7 +52,6 @@ void	run_command(t_cmd *cmd, t_shell *shell)
 		else
 			fork_and_execute(new_args, shell);
 	}
-	printf ("...run_command\n");
 	free_array(new_args);
 }
 
