@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unquote_and_expand_var2.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 01:03:37 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 18:49:30 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/04 13:38:20 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,13 @@ void	dollar_sign_handler(char **s, char **result, t_shell *shell)
 	}
 }
 
-void	character_handler(char **result, char **s)
+void	character_handler(char **s, char **result)
 {
 	int		i;
 	char	*temp;
 
+	printf("character_handler\n");
 	i = 0;
-	*s += 1;
-	if (is_empty(s))
-		return ;
 	while ((*s)[i] && (*s)[i] != '\'' && (*s)[i] != '"' && (*s)[i] != '$')
 		i++;
 	temp = ft_substr(&(*s)[0], 0, i);
