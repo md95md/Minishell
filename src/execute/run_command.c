@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 10:46:41 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/04 14:02:42 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/04 14:07:21 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	fork_and_execute(char **new_args, t_shell *shell)
 	pid_t	pid;
 	int		status;
 
-	printf ("fork_and_execute\n");
 	pid = fork();
 	if (pid < 0)
 		error_exit("fork failed", shell);
