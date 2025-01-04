@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 22:51:34 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/04 00:10:08 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/04 13:55:35 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ t_token	*process_token(char *s)
 		return (NULL);
 	}
 	null_terminate(token);
-	printf("process_token: finished\n");
 	return (token);
 }
 
@@ -66,7 +65,6 @@ bool	find_next_token(char **ptr, char *end, char *charset)
 {
 	char	*cur;
 
-	//printf("find_next_token\n");
 	cur = *ptr;
 	while ((cur < end) && ft_strchr(WHITESPACE, *cur))
 		cur++;

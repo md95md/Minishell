@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 20:41:27 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/04 13:37:24 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/04 13:57:40 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ char	*unquote_and_expand_var(char *s, t_shell *shell)
 {
 	char	*result;
 
-	printf ("unquote_and_expand_var\n");
 	result = ft_calloc(1, sizeof(char));
 	if (!result)
 		return (NULL);
@@ -31,7 +30,6 @@ char	*unquote_and_expand_var(char *s, t_shell *shell)
 		else
 			character_handler(&s, &result);
 	}
-	printf ("unquote_and_expand_var: done\n");
 	return (result);
 }
 
