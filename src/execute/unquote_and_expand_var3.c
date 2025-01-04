@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 01:03:37 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/04 13:32:46 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/04 13:58:05 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ char	*ft_strjoin_free(char *s1, char *s2)
 {
 	char	*join;
 
-	printf("ft_strjoin_free\n");
 	join = ft_strjoin(s1, s2);
 	if  (!join)
 		return (NULL);
