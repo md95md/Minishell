@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 01:03:37 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/04 13:38:20 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/04 13:57:47 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ void	character_handler(char **s, char **result)
 	int		i;
 	char	*temp;
 
-	printf("character_handler\n");
 	i = 0;
 	while ((*s)[i] && (*s)[i] != '\'' && (*s)[i] != '"' && (*s)[i] != '$')
 		i++;
