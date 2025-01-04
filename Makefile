@@ -6,7 +6,7 @@
 #    By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/17 12:15:22 by plesukja          #+#    #+#              #
-#    Updated: 2025/01/04 17:55:46 by plesukja         ###   ########.fr        #
+#    Updated: 2025/01/04 18:23:01 by plesukja         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,8 +102,7 @@ SRCS		:=	libft/get_next_line/get_next_line.c \
 				src/get_and_process_input.c \
 				src/signal.c \
 				src/utils.c \
-				src/free1.c \
-				src/free2.c \
+				src/free.c \
 				src/clean_and_exit.c \
 						  
 OBJS        := $(SRCS:.c=.o)
