@@ -6,42 +6,13 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 17:24:26 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/31 13:40:51 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/04 12:30:39 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_gnl_strjoin_free(char *s1, char *s2);
-char	*ft_find_new_line(int fd, char *file_read);
-char	*ft_extract_line(char *file_read);
-char	*ft_get_remain(char *file_read);
-
-char	*get_next_line(int fd)
-{
-	static char	*file_read;
-	char		*extract_line;
-
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	file_read = ft_find_new_line(fd, file_read);
-	if (!file_read)
-		return (NULL);
-	extract_line = ft_extract_line(file_read);
-	file_read = ft_get_remain(file_read);
-	return (extract_line);
-}
-
-char	*ft_gnl_strjoin_free(char *s1, char *s2)
-{
-	char	*tmp;
-
-	tmp = ft_gnl_strjoin(s1, s2);
-	free(s1);
-	return (tmp);
-}
-
-char	*ft_find_new_line(int fd, char *file_read)
+static char	*ft_find_new_line(int fd, char *file_read)
 {
 	int		num_read;
 	char	*buffer;
@@ -67,7 +38,7 @@ char	*ft_find_new_line(int fd, char *file_read)
 	return (free(buffer), file_read);
 }
 
-char	*ft_extract_line(char *file_read)
+static char	*ft_extract_line(char *file_read)
 {
 	char	*result;
 	int		index;
@@ -94,7 +65,7 @@ char	*ft_extract_line(char *file_read)
 	return (result);
 }
 
-char	*ft_get_remain(char *file_read)
+static char	*ft_get_remain(char *file_read)
 {
 	int		index;
 	int		result_index;
@@ -118,6 +89,21 @@ char	*ft_get_remain(char *file_read)
 	}
 	free(file_read);
 	return (result);
+}
+
+char	*get_next_line(int fd)
+{
+	static char	*file_read;
+	char		*extract_line;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	file_read = ft_find_new_line(fd, file_read);
+	if (!file_read)
+		return (NULL);
+	extract_line = ft_extract_line(file_read);
+	file_read = ft_get_remain(file_read);
+	return (extract_line);
 }
 
 // #include <fcntl.h>
