@@ -6,7 +6,7 @@
 #    By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/17 12:15:22 by plesukja          #+#    #+#              #
-#    Updated: 2024/12/31 13:04:55 by plesukja         ###   ########.fr        #
+#    Updated: 2025/01/04 12:39:42 by plesukja         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@
 
 NAME        	:= minishell
 CC          	:= cc
-FLAGS       	:= -Wall -Wextra -Werror
+#FLAGS       	:= -Wall -Wextra -Werror 
+FLAGS       	:= -Wall -Wextra -Werror -fsanitize=address -g
 ##LINUX_readline 	:= -lreadline
 
 ## MAC_readline
@@ -26,6 +27,7 @@ MAC_READ_LINE = -I/usr/local/Cellar/readline/8.2.13/include -L/usr/local/Cellar/
 
 SRCS		:=	libft/get_next_line/get_next_line.c \
 				libft/get_next_line/get_next_line_utils.c \
+				libft/get_next_line/get_next_line_utils2.c \
 				libft/libft/ft_bzero.c \
 				libft/libft/ft_memcpy.c \
 				libft/libft/ft_strrchr.c \
