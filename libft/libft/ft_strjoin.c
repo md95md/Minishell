@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:13:18 by plesukja          #+#    #+#             */
-/*   Updated: 2024/03/22 12:55:12 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/04 10:32:36 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,9 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	i = 0;
 	while (*s1)
-	{
-		result[i++] = *s1;
-		s1++;
-	}
+		result[i++] = *s1++;
 	while (*s2)
-	{
-		result[i++] = *s2;
-		s2++;
-	}
+		result[i++] = *s2++;
 	result[i] = '\0';
 	return (result);
 }
