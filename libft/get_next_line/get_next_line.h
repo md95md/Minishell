@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 00:47:21 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/31 13:35:34 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/04 12:32:18 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 
 void	*ft_gnl_calloc(size_t size, size_t count);
 int		ft_gnl_strlen(char *s);
-char	*ft_gnl_strjoin(const char *s1, const char *s2);
 char	*ft_gnl_strchr(const char *s, int c);
+char	*ft_gnl_strjoin_free(char *s1, char *s2);
 char	*get_next_line(int fd);
 
 #endif
