@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 14:49:23 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/04 13:34:21 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/04 14:01:25 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@
 
 void	run_input(t_token *token, t_shell *shell)
 {
-	printf ("run_input\n");
 	if (!token)
 		exit(EXIT_FAILURE);
 	if (token->type == COMMAND)
@@ -95,5 +94,4 @@ void	run_input(t_token *token, t_shell *shell)
 		run_redir((t_redir *)token, shell);
 	if (token->type == PIPE)
 		run_pipe((t_pipe *)token, shell);
-	printf ("run_input: finished\n");
 }
