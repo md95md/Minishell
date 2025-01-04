@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 08:37:12 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/02 14:50:51 by agaleeva         ###   ########.fr       */
+/*   Updated: 2025/01/04 13:48:01 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	main(int ac, char **av, char **envp)
 		{
 			process_input(shell, input);
 			restore_fd(shell);
-			run_signals(3, shell);
+			run_signals(1, shell);
 			free_tree(shell->current_cmd);
 			shell->current_cmd = NULL;
 			free(input);
