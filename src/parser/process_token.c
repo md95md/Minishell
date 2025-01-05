@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_token.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 22:51:34 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/04 14:04:10 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/05 15:13:10 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,17 @@ static t_token	*null_terminate(t_token *token)
 	t_pipe	*pipe;
 	int		i;
 
+	i = 0;
 	if (!token)
 		return (NULL);
 	if (token->type == COMMAND)
 	{
 		cmd = (t_cmd *)token;
-		i = 0;
-		while (cmd->av[i++])
-			cmd->end_av[i] = 0;
+		while (cmd->av[i])
+		{
+			*cmd->end_av[i] = 0;
+			i++;
+		}
 	}
 	else if (token->type == REDIR)
 	{
