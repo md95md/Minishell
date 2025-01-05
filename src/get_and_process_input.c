@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_and_process_input.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 12:35:44 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/04 14:02:16 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/05 18:12:34 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,21 @@ static char	*init_prompt(t_shell *shell)
 {
 	char	*pwd;
 	char	*user;
-	char	*prompt;
+	char	*final_prompt;
+	char	*old_prompt;
 
 	pwd = ft_getenv(shell->env, "PWD");
 	user = ft_getenv(shell->env, "USER");
-	prompt = NULL;
+	old_prompt = NULL;
 	if (!pwd || !user)
 		return (ft_strdup("$ "));
-	prompt = ft_strjoin(user, "@:~");
-	prompt = ft_strjoin(prompt, pwd);
-	prompt = ft_strjoin(prompt, "$ ");
-	return (prompt);
+	old_prompt = ft_strjoin(user, "@:~");
+	final_prompt = ft_strjoin(old_prompt, pwd);
+	free(old_prompt);
+	old_prompt = final_prompt;
+	final_prompt = ft_strjoin(old_prompt, "$ ");
+	free(old_prompt);
+	return (final_prompt);
 }
 
 int	get_input(char **line, t_shell *shell)
@@ -34,7 +38,7 @@ int	get_input(char **line, t_shell *shell)
 	char	*prompt;
 
 	prompt = init_prompt(shell);
-	run_signals(1, shell);
+	// run_signals(1, shell);
 	*line = readline(prompt);
 	free(prompt);
 	if (!*line)
