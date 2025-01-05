@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 10:46:41 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/04 14:07:21 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/05 09:40:39 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,11 @@ void	run_command(t_cmd *cmd, t_shell *shell)
 
 	if (!cmd->av[0])
 		return ;
+	//printf("run_command: cmd->av[0] = %s\n", cmd->av[0]);
+	//printf("run_command: cmd->av[1] = %s\n", cmd->av[1]);
 	new_args = parse_arguments(cmd->av, shell);
+	//printf("run_command: new_args[0]=%s\n", new_args[0]);
+	//printf("run_command: new_args[1]=%s\n", new_args[1]);
 	if (!new_args)
 		error_exit("parse arguments failed", shell);
 	if (is_builtin_cmd(new_args[0]))
@@ -60,6 +64,7 @@ void	fork_and_execute(char **new_args, t_shell *shell)
 	pid_t	pid;
 	int		status;
 
+	//printf("fork_and_execute\n");
 	pid = fork();
 	if (pid < 0)
 		error_exit("fork failed", shell);
