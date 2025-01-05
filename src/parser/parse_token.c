@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 23:37:54 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/03 23:57:28 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/05 09:39:48 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,22 @@ char *end)
 	int		ac;
 	int		token_sign;
 
+	printf("parse_command_args\n");
 	ac = 0;
 	while (!find_next_token(ptr, end, "|"))
 	{
 		token_sign = go_get_token_sign(ptr, end, &token_start, &token_end);
+		//printf("parse_command_args: token_start = %s\n", token_start);
+		//printf("parse_command_args: token_end = %s\n", token_end);
 		if (token_sign == 0)
 			break ;
 		if (token_sign == -1 || !ft_strchr("a'\"", token_sign))
 			return (parser_error("syntax error\n", token));
-		cmd->av[ac] = token_start;
+		//cmd->av[ac] = token_start;
+		cmd->av[ac] = ft_strndup(token_start, token_end - token_start);
 		cmd->end_av[ac] = token_end;
+		//printf("parse_command_args: cmd->av[%d]=%s\n", ac, cmd->av[ac]);
+		//printf("parse_command_args: cmd->end_av[%d]=%s\n", ac, cmd->end_av[ac]);
 		ac++;
 		token = parse_redirs(token, ptr, end);
 	}
@@ -73,6 +79,7 @@ t_token	*parse_pipe(char **ptr, char *end)
 	t_token	*left;
 	t_token	*right;
 
+	printf("parse_pipe\n");
 	left = parse_token(ptr, NULL, end);
 	if (!left)
 		return (NULL);
@@ -98,6 +105,7 @@ t_token	*parse_token(char **s, t_token *token, char *end)
 {
 	t_cmd	*cmd;
 
+	printf("parse_token\n");
 	token = create_cmd_token();
 	if (!token)
 		return (NULL);
