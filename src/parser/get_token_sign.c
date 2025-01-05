@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   procure_token_sign.c                               :+:      :+:    :+:   */
+/*   get_token_sign.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 23:54:15 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/05 09:40:07 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/05 18:25:59 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,15 +91,10 @@ int	go_get_token_sign(char **ptr, char *end, char **token_start, char **token_en
 	while ((cur < end) && ft_strchr(WHITESPACE, *cur))
 		cur++;
 	if (token_start)
-	{
 		*token_start = cur;
-		//*token_start = ft_strndup(cur, end - cur);
-	}
-	//printf("go_get_token_sign: *token_start = %s\n", *token_start);
 	token_sign = get_token_sign(&cur);
 	if (token_end)
 		*token_end = cur;
-	//printf("go_get_token_sign: *token_end = %s\n", *token_end);
 	while (cur < end && ft_strchr(WHITESPACE, *cur))
 		cur++;
 	*ptr = cur;
