@@ -6,7 +6,7 @@
 #    By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/17 12:15:22 by plesukja          #+#    #+#              #
-#    Updated: 2025/01/04 18:23:01 by plesukja         ###   ########.fr        #
+#    Updated: 2025/01/05 09:41:32 by plesukja         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,7 +95,7 @@ SRCS		:=	libft/get_next_line/get_next_line.c \
 				src/execute/unquote_and_expand_var3.c \
 				src/parser/process_token.c \
 				src/parser/parse_token.c \
-				src/parser/procure_token_sign.c \
+				src/parser/get_token_sign.c \
 				src/parser/create_token.c \
 				src/parser/create_redir_token_heredoc.c \
 				src/main.c \
