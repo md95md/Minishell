@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free1.c                                            :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 20:26:56 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/04 18:21:43 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/05 09:37:30 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,16 @@ void	free_env(t_env **env)
 void	free_tree(t_token *token)
 {
 	t_redir	*redir;
+	//t_cmd	*cmd;
 
 	if (!token)
 		return ;
 	if (token->type == COMMAND)
+	{
 		free((t_cmd *)token);
+		// cmd = (t_cmd *)token;
+		// free_array(cmd->av);
+	}
 	else if (token->type == REDIR)
 	{
 		redir = (t_redir *)token;
