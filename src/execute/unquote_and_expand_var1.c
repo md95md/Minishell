@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unquote_and_expand_var1.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 20:41:27 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/04 13:57:40 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/05 16:08:32 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*var_expansion(char **s, t_shell *shell)
 	char	*var_name;
 	int		var_name_len;
 
-	*s += 1;
+	// *s += 1;
 	// if (ft_strchr("\'\"$ \0", (*s)[0]))
 	// return (ft_strdup("$"));
 	if ((*s)[0] == '?')
