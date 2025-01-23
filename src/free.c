@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 20:26:56 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/05 09:37:30 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/17 19:52:49 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,13 @@ void	free_tree(t_token *token)
 
 	if (!token)
 		return ;
-	if (token->type == COMMAND)
-	{
-		free((t_cmd *)token);
-		// cmd = (t_cmd *)token;
-		// free_array(cmd->av);
-	}
-	else if (token->type == REDIR)
+	// if (token->type == COMMAND)
+	// {
+	// 	free((t_cmd *)token);
+	// 	// cmd = (t_cmd *)token;
+	// 	// free_array(cmd->av);
+	// }
+	if (token->type == REDIR)
 	{
 		redir = (t_redir *)token;
 		if (redir->mode == 'h' && redir->temp_file)

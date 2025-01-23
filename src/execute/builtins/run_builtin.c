@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 18:14:14 by plesukja          #+#    #+#             */
-/*   Updated: 2024/11/30 15:35:59 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/07 15:00:20 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ bool	is_builtin_cmd(char *arg)
 
 void	run_builtin_cmd(t_shell *shell, char **arg)
 {
+	// printf ("run_builtin_cmd: arg[0]=%s\n", arg[0]);
 	if (ft_strcmp(arg[0], "echo") == 0)
 		run_builtin_echo(shell, arg);
 	else if (ft_strcmp(arg[0], "cd") == 0)

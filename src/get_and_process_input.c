@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_and_process_input.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 12:35:44 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/05 18:12:34 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/23 00:37:57 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ static char	*init_prompt(t_shell *shell)
 	if (!pwd || !user)
 		return (ft_strdup("$ "));
 	old_prompt = ft_strjoin(user, "@:~");
+	free(user);
 	final_prompt = ft_strjoin(old_prompt, pwd);
+	free(pwd);
 	free(old_prompt);
 	old_prompt = final_prompt;
 	final_prompt = ft_strjoin(old_prompt, "$ ");
@@ -38,11 +40,17 @@ int	get_input(char **line, t_shell *shell)
 	char	*prompt;
 
 	prompt = init_prompt(shell);
-	// run_signals(1, shell);
 	*line = readline(prompt);
 	free(prompt);
 	if (!*line)
-		return (-1);
+	{
+		// if (g_signal == 130)
+		// {
+		// 	restore_prompt(SIGINT);
+		// }
+		write(STDOUT_FILENO, "exit\n", 5);
+		return(-1);
+	}
 	if (*line && **line)
 		add_history(*line);
 	return (0);
@@ -54,6 +62,7 @@ void	process_input(t_shell *shell, char *input)
 		return ;
 	run_signals(2, shell);
 	run_input(shell->current_cmd, shell);
+	run_signals(1, shell);
 }
 
 bool	build_tree(t_shell *shell, char *input)

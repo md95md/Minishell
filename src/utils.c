@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 14:22:34 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/31 12:52:12 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/17 14:40:49 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 		s1++;
 		s2++;
 	}
-	return ((unsigned char)*s1 - (unsigned char)*s2);
+	return (*(unsigned char *)s1 - *(unsigned char *)s2);
 }
 
 int	array_len(char **array)

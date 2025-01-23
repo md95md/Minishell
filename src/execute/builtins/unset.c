@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 13:09:50 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 14:56:55 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/17 19:48:39 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	unset_env_arr(t_env **env, char *var)
 				prev->next = curr->next;
 			free(curr->key);
 			free(curr->value);
-			free(curr);
+			//free(curr);
 		}
 		prev = curr;
 		curr = curr->next;

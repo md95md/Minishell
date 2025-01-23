@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:30:06 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 15:43:41 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/23 10:16:51 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static char	**get_path_arr(t_env *env)
 	if (!path_value)
 		return (NULL);
 	path_arr = ft_split(path_value, ':');
+	free(path_value);
 	if (!path_arr)
 		return (NULL);
 	return (path_arr);
@@ -97,6 +98,7 @@ void	execute(char **args, t_shell *shell)
 
 	if (!args || !args[0])
 	{
+		shell->exit_status = 0;
 		free_array(args);
 		clean_and_exit(shell);
 	}

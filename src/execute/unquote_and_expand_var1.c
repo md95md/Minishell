@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unquote_and_expand_var1.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 20:41:27 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/05 16:08:32 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/23 10:29:34 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,16 @@ char	*var_expansion(char **s, t_shell *shell)
 	char	*var_name;
 	int		var_name_len;
 
-	// *s += 1;
-	// if (ft_strchr("\'\"$ \0", (*s)[0]))
-	// return (ft_strdup("$"));
+	*s += 1;
+	if (ft_strchr("\'\"$ \0", (*s)[0]))
+		return (ft_strdup("$"));
 	if ((*s)[0] == '?')
 	{
 		*s += 1;
 		return (ft_itoa(shell->exit_status));
 	}
 	var_name_len = 0;
-	while (!ft_strchr("'\"$ \0", (*s)[var_name_len]) && (*s)[var_name_len])
+	while (!ft_strchr("'\"$ ", (*s)[var_name_len]) && (*s)[var_name_len])
 		var_name_len++;
 	var_name = ft_substr(*s, 0, var_name_len);
 	var_value = ft_getenv(shell->env, var_name);
@@ -56,7 +56,7 @@ char	*var_expansion(char **s, t_shell *shell)
 	if (!var_value)
 		return (ft_strdup(""));
 	*s += var_name_len;
-	return (var_value);
+	return (ft_strdup(var_value));
 }
 
 //expand_variable 7/16

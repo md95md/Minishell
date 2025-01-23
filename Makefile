@@ -6,7 +6,7 @@
 #    By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/17 12:15:22 by plesukja          #+#    #+#              #
-#    Updated: 2025/01/05 09:41:32 by plesukja         ###   ########.fr        #
+#    Updated: 2025/01/15 17:24:04 by plesukja         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,17 @@ NAME        	:= minishell
 CC          	:= cc
 #FLAGS       	:= -Wall -Wextra -Werror 
 FLAGS       	:= -Wall -Wextra -Werror -fsanitize=address -g
-##LINUX_readline 	:= -lreadline
+# LINUX_readline 	:= -lreadline
 
 ## MAC_readline
 # ## original
 #MAC_READ_LINE = -I/opt/homebrew/Cellar/readline/8.2.13/include -L/opt/homebrew/Cellar/readline/8.2.13/lib -lreadline
-MAC_READ_LINE = -I/usr/local/Cellar/readline/8.2.13/include -L/usr/local/Cellar/readline/8.2.13/lib -lreadline
+#MAC_READ_LINE = -I/usr/local/Cellar/readline/8.2.13/include -L/usr/local/Cellar/readline/8.2.13/lib -lreadline
+
+LIB_RL := -lreadline
+ifeq ($(shell uname), Darwin)
+LIB_RL := -L/usr/local/opt/readline/lib  -lreadline
+endif
 
 ######## PROGRAM'S SRCS ########
 
@@ -108,7 +113,7 @@ SRCS		:=	libft/get_next_line/get_next_line.c \
 OBJS        := $(SRCS:.c=.o)
 
 .c.o:
-	${CC} ${FLAGS} -c $< -o ${<:.c=.o}
+	${CC} ${FLAGS} -I/usr/local/opt/readline/include -c $< -o ${<:.c=.o}
 
 ######## Makefile  obj ########
 
@@ -120,18 +125,12 @@ BLUE		:= \033[1;34m
 CYAN 		:= \033[1;36m
 RM		    := rm -f
 
-# ##LINUX
-# ${NAME}:	${OBJS}
-# 			@echo "$(GREEN)Compilation ${CLR_RMV}of ${YELLOW}$(NAME) ${CLR_RMV}..."
-# 			${CC} ${FLAGS} ${LINUX_readline} -o ${NAME} ${OBJS}
-# 			@echo "$(GREEN)$(NAME) created[0m ✔️"
-# ##MACOS
 ${NAME}:	${OBJS}
 			@echo "$(GREEN)Compilation ${CLR_RMV}of ${YELLOW}$(NAME) ${CLR_RMV}..."
-			${CC} ${FLAGS} ${MAC_READ_LINE} -o ${NAME} ${OBJS}
-			@echo "$(GREEN)$(NAME) created[0m ✔️"
+			${CC} ${FLAGS} ${LIB_RL} -o ${NAME} ${OBJS}
+			@echo "$(GREEN)$(NAME) created ✔️"
 			
-all:		${NAME}
+all:		${NAME} Makefile src/minishell.h
 
 bonus:		all
 

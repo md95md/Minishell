@@ -1,9 +1,0 @@
-{
-	"files.associations": {
-		"*.embeddedhtml": "html",
-		"cstdlib": "c",
-		"ios": "c",
-		"__node_handle": "c",
-		"functional": "c"
-	}
-}

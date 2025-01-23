@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_and_exit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 16:29:54 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/31 13:37:14 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/06 15:15:30 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ void	clean_and_exit(t_shell *shell)
 	}
 	free(shell);
 	// ## LINUX
-	// rl_clear_history();
+	rl_clear_history();
 	// ## MACOS
-	clear_history();
+	// clear_history();
 	exit(exit_status_temp);
 }
 

@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 14:49:23 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/04 14:01:25 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/20 22:58:08 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,8 @@ void	run_input(t_token *token, t_shell *shell)
 	if (token->type == REDIR)
 		run_redir((t_redir *)token, shell);
 	if (token->type == PIPE)
+	{
+		//printf("run_input: token->type == PIPE\n");
 		run_pipe((t_pipe *)token, shell);
+	}
 }

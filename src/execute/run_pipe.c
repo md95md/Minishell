@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_pipe.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 10:43:04 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 18:24:26 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/20 23:20:33 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 static void	set_new_left_pfd(int pfd[], t_pipe *pipe_token, t_shell *shell)
 {
 	close(pfd[0]);
-	if (dup2(pfd[1], STDIN_FILENO) < 0)
+	if (dup2(pfd[1], STDOUT_FILENO) < 0)
 		error_exit("dup2 failed", shell);
 	close(pfd[1]);
-	run_command((t_cmd *)pipe_token->left, shell);
+	run_input(pipe_token->left, shell);
 	clean_and_exit(shell);
 }
 
 static void	set_new_right_pfd(int pfd[], t_pipe *pipe_token, t_shell *shell)
 {
 	close(pfd[1]);
-	if (dup2(pfd[0], STDOUT_FILENO) < 0)
+	if (dup2(pfd[0], STDIN_FILENO) < 0)
 		error_exit("dup2 failed", shell);
 	close(pfd[0]);
-	run_command((t_cmd *)pipe_token->right, shell);
+	run_input(pipe_token->right, shell);
 	clean_and_exit(shell);
 }
 

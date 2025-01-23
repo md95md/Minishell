@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 17:48:10 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/04 17:54:40 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/04 18:17:29 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 static void	free_cmd(t_cmd *cmd)
 {
-	if (cmd->av)
-		free_array(cmd->av);
+	//free_array(cmd->av);
 	free(cmd);
 }
 
@@ -39,9 +38,6 @@ static void	free_pipe(t_pipe *pipe)
 
 void	free_tree(t_token *token)
 {
-	t_redir	*redir;
-	t_cmd	*cmd;
-
 	if (!token)
 		return ;
 	if (token->type == COMMAND)

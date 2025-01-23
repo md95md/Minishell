@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 08:36:54 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/04 13:11:35 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/22 23:04:04 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 #define MAXARGS 10
 #define WHITESPACE " \t\r\n\v"
 #define SIGN "><|"
+
+extern int g_signal;
 
 typedef enum e_cmd_oprt_type
 {
@@ -82,79 +84,11 @@ typedef struct s_shell
 	int				out_fd;
 }	t_shell;
 
-// ///****************/ main
-// void	init_shell(t_shell **shell, char **envp);
-// int		get_input(char **line, t_shell *shell);
-// void	process_input(t_shell *shell, char *input);
-// void	restore_fd(t_shell *shell);
-// //run_signals(3);
-// //free_tree();
-// void	clean_and_exit(t_shell *shell);
-
-// //****************/ init_shell
-// char	**get_env_arr(char **arr);
-// void	create_env_linked_list(t_env **env, char **envp);
-
-// //****************/ get_input
-// char	*init_prompt(t_shell *shell);
-// //run_signals(1);
-// //readline();
-// //add_history());
-
-// //****************/ process_input
-// bool	build_tree(t_shell *shell, char *input);
-// //run_signals(2);
-// void	run_input(t_token *token, t_shell *shell);
-
-// //****************/ build_tree
-// t_token	*process_token(char *s);
-
-// //****************/ process_token
-// t_token	*parse_token(char *s, t_token *token, char *end);
-// bool	find_next_token(char **ptr, char *end, char *charset);
-
-// //****************/ parse_token
-// // t_token	*create_cmd_token(void);
-// // t_token	*parse_redirs(t_token *token, char **ptr, char *end);
-// // t_token	*parse_command_args(t_token *token, t_cmd *cmd, char **ptr, char *end);
-// // t_token	*parse_pipe(char **ptr, char *end);
-
-// //****************/ run_input
-// void	run_command(t_cmd *cmd, t_shell *shell);
-// void	run_redir(t_redir *redir, t_shell *shell);
-// void	run_pipe(t_pipe *pipe, t_shell *shell);
-
-
-// //****************/ run_command
-// //run_child_process();
-// //run_non_piped_command();
-
-// //****************/ signal
-// void	run_signals(int sig, t_shell *shell);
-// // void	restore_prompt(void);
-// // void	ctrl_c(void);
-// // void	back_slash(void);
-
-// //****************/ env
-// void	create_env_linked_list(t_env **env, char **envp);
-
-// //****************/ clean_and_exit
-// void	free_array(char **arr);
-// void	free_env(t_env **env);
-// void	free_tree(t_token *token);
-// void	clean_and_exit(t_shell *shell);
-
-//*****************************************************************//
-//*****************************************************************//
-
 //****************/ main
 int		get_input(char **line, t_shell *shell);
 void	process_input(t_shell *shell, char *input);
 bool	build_tree(t_shell *shell, char *input);
 t_token	*process_token(char *s);
-
-//****************/ get_input
-
 
 //****************/ process_token
 t_token	*parse_token(char **s, t_token *token, char *end);
@@ -228,7 +162,7 @@ void	free_tree(t_token *token);
 
 //****************/ signal
 void	run_signals(int sig, t_shell *shell);
-// void	restore_prompt(void);
+void	restore_prompt(int signum);
 // void	ctrl_c(void);
 // void	back_slash(void);
 

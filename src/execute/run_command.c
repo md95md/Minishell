@@ -6,7 +6,7 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 10:46:41 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/05 09:40:39 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/23 10:15:12 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ static char	**parse_arguments(char **args, t_shell *shell)
 	new_args = ft_calloc(array_len(args) + 1, sizeof(char *));
 	while (args[i])
 	{
+		// if (!args[i] || !*args[i])
+		// {
+		// 	i++;
+		// 	continue ;
+		// }
 		tmp = unquote_and_expand_var(args[i], shell);
 		if (tmp[0])
 			new_args[j++] = tmp;
@@ -40,11 +45,7 @@ void	run_command(t_cmd *cmd, t_shell *shell)
 
 	if (!cmd->av[0])
 		return ;
-	//printf("run_command: cmd->av[0] = %s\n", cmd->av[0]);
-	//printf("run_command: cmd->av[1] = %s\n", cmd->av[1]);
 	new_args = parse_arguments(cmd->av, shell);
-	//printf("run_command: new_args[0]=%s\n", new_args[0]);
-	//printf("run_command: new_args[1]=%s\n", new_args[1]);
 	if (!new_args)
 		error_exit("parse arguments failed", shell);
 	if (is_builtin_cmd(new_args[0]))

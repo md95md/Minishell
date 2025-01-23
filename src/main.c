@@ -6,12 +6,11 @@
 /*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 08:37:12 by plesukja          #+#    #+#             */
-/*   Updated: 2025/01/04 13:48:01 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/22 23:40:16 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stddef.h>
 
 static char	**get_env_arr(char **arr)
 {
@@ -92,17 +91,15 @@ int	main(int ac, char **av, char **envp)
 	shell = NULL;
 	input = NULL;
 	init_shell(&shell, envp);
-	while (1)
+	run_signals(1, shell);
+	while (get_input(&input, shell) != -1)
 	{
-		if (get_input(&input, shell) != -1)
-		{
-			process_input(shell, input);
-			restore_fd(shell);
-			run_signals(1, shell);
-			free_tree(shell->current_cmd);
-			shell->current_cmd = NULL;
-			free(input);
-		}
+		process_input(shell, input);
+		restore_fd(shell);
+		//run_signals(1, shell);
+		free_tree(shell->current_cmd);
+		shell->current_cmd = NULL;
+		//free(input);
 	}
 	if (input)
 		free(input);

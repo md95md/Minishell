@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:27:32 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 00:16:57 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/05 15:33:51 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static int	add_node_to_arr(t_env *node, char **env_arr)
 			if (!temp)
 				return (0);
 			env_arr[i] = ft_strjoin(temp, node->value);
+			free(temp);
 			if (!env_arr[i])
 				return (0);
 		}
@@ -75,7 +76,7 @@ char	*ft_getenv(t_env *env, char *key)
 	while (curr)
 	{
 		if (ft_strcmp(curr->key, key) == 0)
-			return (curr->value);
+			return (ft_strndup(curr->value, -1));
 		curr = curr->next;
 	}
 	return (NULL);

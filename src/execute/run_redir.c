@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 10:42:00 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 18:13:49 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/17 20:01:56 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,9 @@ void	run_redir(t_redir *redir, t_shell *shell)
 {
 	char	*file_name;
 
+	//printf ("run_redir\n");
 	file_name = unquote_and_expand_var(redir->file, shell);
+	//printf (".run_redir\n");
 	if (!file_name)
 	{
 		redir_error(redir, file_name, shell);
@@ -97,6 +99,7 @@ void	run_redir(t_redir *redir, t_shell *shell)
 		shell->in_fd = set_new_in_fd(redir, file_name, shell);
 	else if (redir->mode == 'h')
 		shell->in_fd = set_new_in_fd(redir, redir->temp_file, shell);
+	//printf ("..run_redir\n");
 	free (file_name);
 	if (shell->in_fd < 0 || shell->out_fd < 0)
 		return ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 00:17:49 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/31 11:58:51 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/07 15:56:43 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	run_builtin_cd(t_shell *shell, char **args)
 	char	*old_pwd;
 	char	*new_pwd;
 
+	//printf("run_builtin_cd\n");
 	old_pwd = getcwd(NULL, 0);
 	if (!old_pwd)
 		return (handle_cd_error(shell, NULL, NULL));

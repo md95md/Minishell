@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_no_var.c                                    :+:      :+:    :+:   */
+/*   export_no_var1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 00:17:57 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 15:13:49 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/23 00:09:05 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ static t_env	*duplicate_node(t_env *node)
 	if (!new_node)
 		return (NULL);
 	new_node->key = ft_strdup(node->key);
-	new_node->value = ft_strdup(node->value);
+	if (node->value)
+		new_node->value = ft_strdup(node->value);
+	else
+		new_node->value = NULL;
 	new_node->next = NULL;
 	if (!new_node->key || (node->value && !new_node->value))
 	{

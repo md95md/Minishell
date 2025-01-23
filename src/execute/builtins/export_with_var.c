@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_with_var.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plesukja <plesukja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plesukja <plesukja@42bangkok.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 23:26:22 by plesukja          #+#    #+#             */
-/*   Updated: 2024/12/30 15:22:21 by plesukja         ###   ########.fr       */
+/*   Updated: 2025/01/17 16:12:06 by plesukja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,14 @@ static int	split_var_into_input_key_value(char *var, char **inp_key, char **inp_
 	}
 	else
 	{
-		*inp_value = ft_strdup(var);
+		*inp_key = ft_strdup(var);
 		*inp_value = NULL;
 	}
 	if (!*inp_key || (!*inp_value && equal_ptr))
 	{
 		free (*inp_key);
-		free (*inp_value);
+		if (!*inp_value)
+			free (*inp_value);
 		*inp_key = NULL;
 		*inp_value = NULL;
 		return (-1);
@@ -57,8 +58,8 @@ static bool	find_existed_node_and_update(t_env **env, char *inp_key, char *inp_v
 		}
 		cur = cur->next;
 	}
-	free(inp_key);
-	free(inp_value);
+	// free(inp_key);
+	// free(inp_value);
 	return (false);
 }
 
